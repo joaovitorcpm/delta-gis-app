@@ -1,0 +1,8 @@
+DELTA GIS APP - Sistema de Mapeamento e Análise de Riscos Urbanos
+Projeto de Iniciação Científica - Ipatinga / MG
+
+Este software foi desenvolvido como parte de um estudo científico voltado para o mapeamento e análise de escoamento superficial, impermeabilização do solo e riscos de desastres geológicos em toda a área urbana de Ipatinga.
+
+Ao instalar este aplicativo, você terá acesso à ferramenta oficial de visualização espacial da pesquisa. O uso é livre para fins acadêmicos, educacionais e de planejamento urbano.
+
+Desenvolvido com tecnologias modernas de geoprocessamento e sistemas de desktop.

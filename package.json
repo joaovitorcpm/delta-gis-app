@@ -1,0 +1,44 @@
+{
+  "name": "delta-gis-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "electron-updater": "^6.8.9"
+  },
+  "devDependencies": {
+    "electron": "^24.2.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.deltagis.ipatinga",
+    "productName": "Delta GIS App",
+    "win": {
+      "target": ["nsis"],
+      "icon": "favicon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "favicon.ico",
+      "uninstallerIcon": "favicon.ico",
+      "license": "license.txt",
+      "installerSidebar": "build/sidebar.bmp"
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://seusite.com.br/atualizacoes"
+      }
+    ]
+  }
+}

@@ -1,0 +1,2586 @@
+/* ========================================== */
+/* VARIÁVEIS DE TEMA (CLARO E ESCURO)         */
+/* ========================================== */
+:root {
+    --bg-inicial: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --bg-painel: rgba(255, 255, 255, 0.95);
+    --bg-quadro: #ffffff;
+    --bg-input: #ffffff;
+    --cor-texto: #334155;
+    --cor-texto-secundario: #64748b;
+    --cor-borda: #cbd5e1;
+    --cor-borda-suave: #e2e8f0;
+    --cor-primaria: #3b82f6;
+    --cor-primaria-hover: #2563eb;
+    --sombra-painel: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode {
+    --bg-painel: rgba(30, 41, 59, 0.95);
+    --bg-quadro: #0f172a;
+    --bg-input: #1e293b;
+    --cor-texto: #f8fafc;
+    --cor-texto-secundario: #94a3b8;
+    --cor-borda: #334155;
+    --cor-borda-suave: #1e293b;
+    --cor-primaria: #3b82f6;
+    --cor-primaria-hover: #60a5fa;
+    --sombra-painel: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================== */
+/* CONFIGURAÇÕES GERAIS                       */
+/* ========================================== */
+* {
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Remove as barras de rolagem */
+}
+
+/* ========================================== */
+/* TELA INICIAL - MINIMALISTA & TECH HUB      */
+/* ========================================== */
+#tela-inicial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0b0f19;
+    display: flex;
+    flex-direction: column; /* Organiza a logo e o card em coluna */
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espaço exato e elegante entre a logo e o quadrado central */
+    z-index: 9999;
+    color: white;
+    text-align: center;
+    transition: opacity 0.8s ease;
+    overflow: hidden;
+}
+
+/* Malha Cartográfica Tecnológica Sutil */
+.tech-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Pontos de Luz Difusa (Glows) */
+.glow-effect {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.12;
+}
+.glow-1 {
+    top: 10%;
+    left: 15%;
+    background: #3b82f6; /* Azul primário */
+}
+.glow-2 {
+    bottom: 10%;
+    right: 15%;
+    background: #06b6d4; /* Ciano de destaque */
+}
+
+/* ========================================== */
+/* LOGO ISOLADA (SEM POSICIONAMENTO ABSOLUTO)  */
+/* ========================================== */
+.container-logo-inicial {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 10;
+}
+
+/* Card Central em Glassmorphism */
+.conteudo-entrada {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: 45px 50px;
+    max-width: 560px;
+    width: 90%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Badge de Categoria */
+.badge-topo-inicial {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #60a5fa;
+    margin-bottom: 22px;
+}
+
+.bolinha-pulsante {
+    width: 6px;
+    height: 6px;
+    background-color: #60a5fa;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #60a5fa;
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.25); }
+}
+
+/* Ajuste nos textos internos do card */
+.conteudo-entrada h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.conteudo-entrada p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin-bottom: 32px;
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 460px;
+}
+
+/* Botão de Entrada Tecnológico */
+#btn-começar {
+    width: 100%;
+    padding: 15px 28px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#btn-começar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.7);
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+}
+/* ==========================================
+   ESTILIZAÇÃO DO NOME DO SITE NA TELA INICIAL (NOVA FONTE)
+========================================== */
+.container-logo-inicial {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 15px; 
+    z-index: 10; 
+}
+
+/* Estilo para a imagem PNG da logo */
+.img-logo-inicial {
+    height: 65px; /* Tamanho da sua logo. Ajuste conforme achar melhor */
+    width: auto;
+    /* Coloquei uma sombra na imagem também para combinar com o texto */
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.6)); 
+}
+
+/* Estilização do Nome (agora alinhado com a imagem) */
+.marca-delta-gis {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 2.6rem; 
+    font-weight: 800; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0; /* Removido o margin-bottom pois agora estão lado a lado */
+    color: #ffffff; 
+    text-shadow: 0px 4px 12px rgba(0, 0, 0, 0.7); 
+}
+
+/* Título principal do bloco central */
+.conteudo-entrada h1 { 
+    font-size: 2.5rem; 
+    margin-top: 0; 
+    margin-bottom: 10px; 
+}
+
+/* Mantém o título h1 logo abaixo bem alinhado */
+.conteudo-entrada h1 { 
+    font-size: 2.2rem; /* Diminuí um pouquinho para o Delta GIS ser o destaque principal */
+    margin-top: 5px; 
+    margin-bottom: 10px; 
+}
+
+/* Mantém o título h1 logo abaixo bem alinhado */
+.conteudo-entrada h1 { 
+    font-size: 2.5rem; 
+    margin-top: 0; 
+    margin-bottom: 10px; 
+}
+
+/* Reduz ligeiramente a margem do h1 já que o topo foi preenchido */
+.conteudo-entrada h1 { 
+    font-size: 2.5rem; 
+    margin-top: 5px; 
+    margin-bottom: 10px; 
+}
+#btn-começar {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+#btn-começar:hover { background-color: var(--cor-primaria-hover); transform: scale(1.05); }
+
+.spinner {
+    width: 50px; height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid var(--cor-primaria);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.hidden { display: none; }
+.fade-out { opacity: 0; pointer-events: none; }
+
+/* === SELO DE VERSÃO DO PROJETO === */
+.versao-tag {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 8px;
+    border-radius: 6px;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Espaço entre o texto e a bolinha */
+}
+
+/* A Bolinha Azul Neon com Brilho */
+.bolinha-nova {
+    width: 8px;
+    height: 8px;
+    background-color: #38bdf8; /* Azul ciano vivo */
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px #38bdf8, 0 0 12px #38bdf8; /* Efeito de brilho neon */
+}
+/* ========================================== */
+/* MAPA E PAINEL FLUTUANTE                    */
+/* ========================================== */
+.container-principal {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#mapa-alerta {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.painel-flutuante {
+    position: absolute;
+    top: 20px;
+    right: 75px !important; /* Mantém na direita, longe dos botões laterais */
+    left: auto !important;
+    width: 380px;
+    max-height: calc(100vh - 40px);
+    background-color: var(--bg-painel);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-painel);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    color: var(--cor-texto);
+    overflow-y: auto;
+}
+
+.cabecalho-painel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--cor-borda-suave);
+    padding-bottom: 12px;
+}
+
+.cabecalho-painel h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--cor-texto);
+}
+
+#btn-tema {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+}
+#btn-tema:hover { background-color: var(--cor-borda-suave); }
+
+/* ========================================== */
+/* QUADROS DE INFORMAÇÃO E BUSCA              */
+/* ========================================== */
+.quadro, .quadro-busca {
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.quadro-busca label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.busca-row { display: flex; gap: 8px; }
+
+#input-endereco {
+    flex: 1;
+    padding: 10px;
+    background-color: var(--bg-input);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    outline: none;
+}
+
+#btn-buscar {
+    padding: 10px 18px;
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#btn-buscar:hover { background-color: var(--cor-primaria-hover); }
+
+.quadro h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    border-bottom: 1px solid var(--cor-borda-suave);
+    padding-bottom: 8px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+#txt-risco {
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--bg-input);
+    border: 1px solid var(--cor-borda-suave);
+}
+
+/* ========================================== */
+/* CONTROLES DO LEAFLET (ZOOM, CAMADAS, ETC)  */
+/* ========================================== */
+
+/* Estilização para Zoom e botões padrões do Leaflet */
+.leaflet-bar a {
+    background-color: var(--bg-quadro) !important;
+    color: var(--cor-texto) !important;
+    border-bottom: 1px solid var(--cor-borda-suave) !important;
+}
+
+.leaflet-bar a:hover {
+    background-color: var(--cor-borda-suave) !important;
+    color: var(--cor-primaria) !important;
+}
+
+/* Seletor de Camadas (Recolhido e Expandido) */
+.leaflet-control-layers {
+    background-color: var(--bg-quadro) !important;
+    border: 1px solid var(--cor-borda-suave) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+}
+
+.leaflet-control-layers-expanded {
+    background-color: var(--bg-quadro) !important;
+    color: var(--cor-texto) !important;
+}
+
+.leaflet-control-layers label {
+    color: var(--cor-texto) !important;
+}
+
+/* Botão de Recentralizar Customizado */
+.leaflet-control-recentralizar {
+    width: 34px !important; height: 34px !important;
+    background-color: var(--bg-quadro) !important;
+    border: 2px solid var(--cor-borda-suave) !important;
+    border-radius: 4px !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+}
+.leaflet-control-recentralizar svg { fill: var(--cor-texto); width: 20px; height: 20px; }
+.leaflet-control-recentralizar:hover svg { fill: var(--cor-primaria); }
+
+/* Legenda do Mapa */
+.info.legend {
+    background: var(--bg-painel);
+    color: var(--cor-texto);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    border: 1px solid var(--cor-borda);
+}
+.info.legend b { 
+    border-bottom: 1px solid var(--cor-borda-suave); 
+    color: var(--cor-texto); 
+    display: block;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+}
+.info.legend i { 
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 8px;
+    border-radius: 3px;
+    border: 1px solid var(--cor-borda-suave); 
+}
+/* ========================================== */
+/* ESTILIZAÇÃO DO POP-UP DO LEAFLET           */
+/* ========================================== */
+
+/* Fundo escuro e forçamos a cor do texto AQUI no contêiner principal */
+.leaflet-container .leaflet-popup-content-wrapper, 
+.leaflet-container .leaflet-popup-tip {
+    background-color: var(--bg-quadro) !important;
+    color: var(--cor-texto) !important;
+    box-shadow: var(--sombra-painel) !important;
+    border: 1px solid var(--cor-borda) !important;
+}
+
+/* Botão de fechar */
+.leaflet-popup-close-button {
+    color: var(--cor-texto-secundario) !important;
+}
+
+.leaflet-popup-close-button:hover {
+    color: var(--cor-texto) !important;
+}
+
+/* Divisória */
+.leaflet-popup-content hr {
+    border-color: var(--cor-borda-suave) !important;
+}
+/* ========================================== */
+/* PAINEL DE SELEÇÃO DE CIDADES (TOPO CENTRO) */
+/* ========================================== */
+.painel-cidades {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* Isto garante que fica perfeitamente centrado */
+    width: auto; /* Oculta a largura fixa para se adaptar aos botões */
+    background-color: var(--bg-painel);
+    backdrop-filter: blur(8px);
+    border-radius: 30px; /* Bordas arredondadas estilo 'pílula' */
+    border: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-painel);
+    z-index: 1000;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row; /* Coloca os itens na horizontal */
+    align-items: center; /* Alinha o título e os botões ao centro */
+    gap: 10px;
+}
+
+.painel-cidades h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    border-bottom: none; /* Remove a linha que existia antes */
+    padding-bottom: 0;
+    margin-right: 10px;
+}
+
+
+
+.painel-cidades h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    text-align: center;
+    border-bottom: 1px solid var(--cor-borda-suave);
+    padding-bottom: 8px;
+}
+
+.btn-cidade {
+    padding: 10px 15px;
+    background-color: var(--bg-input);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-cidade:hover {
+    background-color: var(--cor-borda-suave);
+}
+
+.btn-cidade.ativo {
+    background-color: var(--cor-primaria);
+    color: white;
+    border-color: var(--cor-primaria);
+}
+/* ========================================== */
+/* BOTÕES LATERAIS E RECOLHIMENTO DE PAINÉIS  */
+/* ========================================== */
+.menu-lateral-botoes {
+    position: absolute;
+    top: 20px;
+    right: 20px !important; /* Força a ficar na direita */
+    left: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.btn-lateral {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    background-color: var(--bg-painel);
+    border: 2px solid var(--cor-borda);
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--sombra-painel);
+    transition: all 0.3s;
+}
+
+.btn-lateral:hover {
+    background-color: var(--bg-input);
+}
+
+.btn-lateral.ativo {
+    border-color: #0088cc;
+    background-color: rgba(0, 136, 204, 0.1);
+}
+
+/* Garante que os painéis não fiquem em cima dos botões */
+.painel-flutuante {
+    right: 75px; 
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+    transform: translateX(0); /* Posição normal (visível) */
+    opacity: 1;
+}
+
+/* Classe que recolhe o painel jogando-o para fora da tela na direita */
+.painel-oculto {
+    transform: translateX(120%); 
+    opacity: 0;
+    pointer-events: none; /* Impede clicar no painel invisível */
+}
+/* ========================================== */
+/* BOTÃO DE CONFIGURAÇÕES E MODAL DE BLUR     */
+/* ========================================== */
+#btn-config {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    
+    /* Tamanho e Forma */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    
+    /* Cores e Sombra */
+    background-color: var(--bg-painel);
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    
+    /* --- ESTA É A MÁGICA DA CENTRALIZAÇÃO --- */
+    display: flex;            /* Ativa o modo Flexbox */
+    justify-content: center;  /* Centraliza horizontalmente */
+    align-items: center;      /* Centraliza verticalmente */
+    
+    /* Remove espaçamentos que o navegador possa ter adicionado */
+    padding: 0;
+    margin: 0;
+    
+    /* Ajuste fino do tamanho do ícone */
+    font-size: 24px;
+    line-height: 1;
+}
+/* ==========================================
+   VISUAL DO MODAL E EFEITO BLUR NO FUNDO
+   ========================================== */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Fundo escuro semi-transparente */
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Configuração para ele nascer invisível */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Classe que o JavaScript usa para mostrar o modal na tela */
+#modal-overlay.modal-ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==========================================
+   VISUAL DO MODAL (PADRÃO PAINEL FLUTUANTE)
+   ========================================== */
+.modal-box {
+    background-color: var(--bg-painel);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    width: 450px;
+    max-width: 90%;
+    box-shadow: var(--sombra-painel);
+    color: var(--cor-texto);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    /* Animação suave tipo "zoom-in" */
+    transform: translateY(-20px) scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Quando o modal abrir, ele assume o tamanho normal */
+#modal-overlay.modal-ativo .modal-box {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--cor-borda-suave);
+    padding-bottom: 12px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--cor-texto);
+}
+
+/* Botão de fechar (X) igual aos botões laterais do mapa */
+#btn-fechar-modal {
+    background-color: var(--bg-input);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+#btn-fechar-modal:hover {
+    background-color: #ef4444; /* Vermelho para indicar "fechar" */
+    color: white;
+    border-color: #ef4444;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Seções internas idênticas aos quadros de risco e fator */
+.modal-secao {
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.modal-secao h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--cor-texto-secundario);
+    border-bottom: 1px solid var(--cor-borda-suave);
+    padding-bottom: 8px;
+}
+
+.opcao-config {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+}
+
+/* Estilo do botão de Mudar Tema */
+#btn-tema-novo {
+    padding: 10px 16px;
+    background-color: var(--bg-input);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+#btn-tema-novo:hover {
+    background-color: var(--cor-borda-suave);
+    border-color: var(--cor-primaria);
+}
+
+/* Estilo para a lista vazia do histórico */
+.txt-vazio {
+    color: var(--cor-texto-secundario);
+    font-style: italic;
+    font-size: 0.9em;
+    list-style: none;
+    text-align: center;
+    margin: 10px 0;
+}
+
+
+/* ========================================== */
+/* ADAPTAÇÃO PARA CELULARES (ESTILO MAPS)     */
+/* ========================================== */
+@media (max-width: 768px) {
+    
+    /* 1. Painel Inferior (Bottom Sheet Arrastável) */
+    .painel-flutuante {
+        position: fixed !important;
+        top: auto !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 75vh !important; /* Altura máxima quando estiver expandido */
+        max-height: none !important;
+        border-radius: 25px 25px 0 0 !important;
+        padding: 25px 20px 20px 20px !important;
+        background-color: var(--bg-painel) !important;
+        box-shadow: 0 -5px 25px rgba(0,0,0,0.2) !important;
+        bottom: 0 !important;
+        
+        /* z-index normal enquanto recolhido (abaixo dos botões laterais que são 2000) */
+        z-index: 1500 !important; 
+        
+        overflow-y: hidden !important; /* Trava a rolagem de texto quando recolhido */
+        
+        /* MÁGICA: Esconde o painel para baixo, deixando só 110px para fora */
+        transform: translateY(calc(75vh - 110px)) !important; 
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        touch-action: pan-y; /* Ajuda o navegador a entender o arrasto */
+    }
+
+    /* --- ESTA É A CORREÇÃO DE FINALIZAÇÃO --- */
+    /* Classe que o JavaScript vai ativar quando você puxar pra cima */
+    .painel-flutuante.expandido {
+        transform: translateY(0) !important;
+        overflow-y: auto !important; /* Libera a leitura do texto */
+        
+        /* z-index MAIOR QUE OS BOTÕES LATERAIS (2000) */
+        z-index: 2500 !important; 
+    }
+    /* ------------------------------------------- */
+
+    /* Tira a animação enquanto o dedo está na tela para ficar sem atraso */
+    .painel-flutuante.arrastando {
+        transition: none !important;
+    }
+
+    /* A "barrinha" de arrastar visual no topo do painel */
+    .painel-flutuante::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 5px;
+        background-color: var(--cor-texto-secundario);
+        border-radius: 10px;
+        opacity: 0.5;
+        cursor: grab;
+    }
+
+    /* Classe que oculta o painel (quando se troca de aba) */
+    .painel-oculto { transform: none !important; bottom: -100% !important; }
+
+    /* Ajuste dos cabeçalhos para o painel inferior (Bottom Sheet) */
+    #painel-analise .cabecalho-painel { display: none !important; } /* Tira o título de análise geológica */
+    .cabecalho-painel { 
+        justify-content: center !important; 
+        border-bottom: none !important; 
+        margin-top: 5px !important; 
+    } /* Centraliza os títulos dos outros painéis (chuva, solo) */
+
+    /* Ajuste da barra de busca dentro do painel inferior */
+    .quadro-busca {
+        margin-bottom: 15px !important;
+        border-radius: 15px !important;
+        padding: 10px !important;
+        background-color: var(--bg-quadro) !important;
+        border: 1px solid var(--cor-borda) !important;
+    }
+    .quadro-busca label { display: none !important; } /* Oculta o texto "Pesquisar Endereço" */
+    .busca-row { display: flex !important; width: 100% !important; gap: 8px !important; }
+    
+    #input-endereco { 
+        flex: 1 !important; 
+        font-size: 16px !important; /* O tamanho 16px evita que a tela dê zoom automático ao digitar */
+    }
+
+    /* 2. Controles Laterais (Agrupados e redondos, Ancorados no TOPO) */
+    .menu-lateral-botoes {
+        top: 60px !important; /* Pendura do topo para baixo */
+        bottom: auto !important; 
+        right: 15px !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: center !important;
+        z-index: 2000 !important; /* z-index normal dos botões laterais */
+    }
+    
+    .btn-lateral { 
+        width: 45px !important; 
+        height: 45px !important; 
+        border-radius: 50% !important; 
+        margin: 0 !important;
+    }
+
+    /* 3. Engrenagem (Fica perfeitamente abaixo da gotinha de solo) */
+    #btn-config {
+        top: 235px !important; /* Altura exata para seguir a fila dos 3 botões acima */
+        bottom: auto !important;
+        right: 15px !important;
+        width: 45px !important; 
+        height: 45px !important;
+        border-radius: 50% !important;
+        z-index: 2000 !important; /* z-index normal da engrenagem */
+        margin: 0 !important;
+    }
+
+    /* 4. Ajustes Finos de Interface */
+    .painel-cidades { display: none !important; } /* Oculto no celular */
+    .info.legend { display: none !important; }
+    .info-grid { grid-template-columns: 1fr !important; gap: 8px !important; }
+    .conteudo-entrada h1 { font-size: 1.8rem !important; }
+}
+/* ==========================================
+   ESTILO DO PINO MODERNO DO MAPA
+   ================================---------- */
+.pin-moderno-container {
+    position: relative;
+    width: 30px;
+    height: 42px;
+}
+
+.pin-moderno {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background: #e53935;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-moderno::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: rgb(141, 19, 19);
+    position: absolute;
+    border-radius: 50%;
+}
+/* ==========================================
+   TOAST DE NOVIDADES
+========================================== */
+#toast-novidades {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #1e1e1e; /* Fundo escuro para destacar o neon */
+    color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    z-index: 9999; /* Garante que fique acima do mapa */
+    border-left: 4px solid #00f3ff;
+    
+    /* Animação de entrada */
+    transform: translateX(150%);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+}
+
+/* Classe que o JS vai adicionar para mostrar o Toast */
+#toast-novidades.mostrar {
+    transform: translateX(0);
+}
+
+.toast-escondido{
+    /* Mantemos no DOM, apenas fora da tela pelo translateX */
+}
+
+.toast-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.badge-neon {
+    background-color: transparent;
+    color: #00f3ff;
+    border: 1px solid #00f3ff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    box-shadow: 0 0 8px rgba(0, 243, 255, 0.5); /* Efeito pulso/neon */
+}
+
+.toast-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.toast-texto strong {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.toast-texto p {
+    font-size: 0.85rem;
+    color: #cccccc;
+    margin: 0;
+}
+
+#btn-fechar-toast {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: color 0.2s;
+}
+
+#btn-fechar-toast:hover {
+    color: #ffffff;
+}
+/* ==========================================
+   BOTÃO "VER DETALHES" NO TOAST
+========================================== */
+.btn-link-neon {
+    background: none;
+    border: none;
+    color: #00f3ff;
+    text-decoration: underline;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 6px;
+    text-align: left;
+    transition: text-shadow 0.2s;
+}
+
+.btn-link-neon:hover {
+    text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
+}
+
+/* ==========================================
+   FUNDO DESFOCADO (BACKDROP)
+========================================== */
+#fundo-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Escurece um pouco o fundo */
+    backdrop-filter: blur(6px); /* Efeito de desfoque */
+    -webkit-backdrop-filter: blur(6px); /* Suporte para Safari */
+    z-index: 10000; /* Fica acima do Toast (9999) */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Evita cliques quando invisível */
+}
+
+#fundo-blur.mostrar-blur {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ==========================================
+   POPUP CENTRAL (MODAL)
+========================================== */
+#popup-detalhes-v116 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: #1e1e1e;
+    color: #ffffff;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    border: 1px solid #00f3ff;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.15); /* Brilho neon sutil */
+    z-index: 10001; /* Acima do fundo blur */
+    padding: 25px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+#popup-detalhes-v116.mostrar-popup {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.popup-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.popup-cabecalho h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #00f3ff;
+}
+
+#btn-fechar-popup {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#btn-fechar-popup:hover {
+    color: #ffffff;
+}
+
+.lista-novidades {
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.lista-novidades li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #cccccc;
+}
+
+.lista-novidades strong {
+    color: #ffffff;
+}
+
+/* Classe auxiliar geral */
+.escondido {
+    display: none;
+}/* ==========================================
+   VERSÃO NO MODAL DE CONFIGURAÇÕES
+========================================== */
+.versao-modal {
+    text-align: left; /* Alterado para alinhar à esquerda */
+    font-size: 0.85rem;
+    color: var(--cor-texto-secundario, #888888);
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--cor-borda-suave, rgba(128, 128, 128, 0.2));
+    opacity: 0.7;
+    font-family: monospace;
+}
+/* ==========================================
+   CORREÇÃO DA TAG DE VERSÃO NO MOBILE (FIXED)
+========================================== */
+@media (max-width: 768px) {
+    .versao-tag {
+        display: inline-flex !important; 
+        position: fixed !important; 
+        bottom: 25px !important;    
+        right: 20px !important;     /* Joga para a direita */
+        left: auto !important;      /* Garante que não vai esticar para a esquerda */
+        width: fit-content !important; /* Força a barra a ficar pequena como no PC */
+        z-index: 999999 !important; 
+    }
+}
+/* =========================================
+   PAINEL DE CONFIGURAÇÕES (MODAL v1.1.6)
+   ========================================= */
+
+/* Contêiner Principal Unificado */
+.modal-body {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eaeaea;
+}
+
+/* Blocos Internos (Cartões) */
+.settings-card {
+  background-color: #fcfcfc;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.settings-card:last-child {
+  margin-bottom: 0; /* Remove a margem do último bloco */
+}
+
+.settings-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Controle Segmentado (Botões lado a lado) */
+.segmented-control {
+  display: flex;
+  background-color: #eef0f2;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.segment-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+/* Botão Selecionado */
+.segment-btn.active {
+  background-color: #ffffff;
+  color: #0056b3;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Cabeçalho do Histórico (título e botão lado a lado) */
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-header-flex h4 {
+  margin-bottom: 0;
+}
+
+/* Botão Limpar Histórico */
+.btn-clear-text {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.btn-clear-text:hover {
+  background-color: #ffe6e6;
+}
+
+/* Lista de Histórico */
+.modern-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modern-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.modern-list li:last-child {
+  border-bottom: none;
+}
+
+.empty-state {
+  text-align: center;
+  color: #888 !important;
+  font-style: italic;
+}
+
+/* =========================================
+   AJUSTE DE CORES DO MODAL NO MODO ESCURO
+   ========================================= */
+/* Fundo principal do modal (Azul-marinho escuro combinando com o Monitor) */
+body.dark-mode .modal-body {
+  background-color: #161925 !important; 
+  border-color: #262b3d !important;
+}
+
+/* Fundo dos cartões internos (Um tom levemente mais claro para dar profundidade) */
+body.dark-mode .settings-card {
+  background-color: #1e2233 !important; 
+  border-color: #262b3d !important;
+}
+
+/* Cor dos títulos e textos */
+body.dark-mode .settings-card h4, 
+body.dark-mode .card-header-flex h4,
+body.dark-mode .modern-list li {
+  color: #e0e6ed !important;
+}
+
+/* Fundo da "calha" onde ficam os botões de seleção */
+body.dark-mode .segmented-control {
+  background-color: #0f111a !important; 
+}
+
+/* Texto dos botões que NÃO estão selecionados */
+body.dark-mode .segment-btn {
+  color: #7b849c !important;
+}
+
+/* Botão Selecionado (Destaque) */
+body.dark-mode .segment-btn.active {
+  background-color: #2a3047 !important; 
+  color: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+/* O texto de lista vazia do histórico */
+body.dark-mode .empty-state {
+  color: #7b849c !important;
+}
+/* =========================================
+   CORREÇÃO DE CLIQUES E MODAL (v1.1.6)
+   ========================================= */
+
+/* Garante que quando o modal estiver oculto, ele não bloqueie absolutamente nada na tela */
+#modal-overlay.modal-oculto {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* Quando estiver ativo, ele aparece e deixa o painel clicável */
+#modal-overlay.modal-ativo {
+  display: flex !important;
+  pointer-events: auto !important;
+}
+/* =========================================
+   ESCALA GLOBAL DE FONTES (ACESSIBILIDADE)
+   ========================================= */
+
+/* Fonte Menor (A-) */
+body.font-small {
+  font-size: 75% !important;
+}
+
+/* Fonte Padrão (Normal) */
+body.font-normal, body:not(.font-small):not(.font-large) {
+  font-size: 100% !important;
+}
+
+/* Fonte Maior (A+) */
+body.font-large {
+  font-size: 115% !important;
+}
+/* =========================================
+   ANIMAÇÃO SUAVE DO MODAL DE CONFIGURAÇÕES
+   ========================================= */
+
+/* Estado inicial / oculto: transparente e levemente menor */
+#modal-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+#modal-overlay .modal-body,
+#modal-overlay .settings-card { /* Se o seu container interno tiver outra classe de caixa, ajuste aqui */
+  transform: scale(0.95) translateY(-10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Quando ativo: ganha opacidade total e o container volta ao tamanho normal */
+#modal-overlay.modal-ativo {
+  opacity: 1 !important;
+}
+
+#modal-overlay.modal-ativo .modal-body,
+#modal-overlay.modal-ativo .settings-card {
+  transform: scale(1) translateY(0) !important;
+}
+#modal-overlay.modal-oculto {
+    display: flex !important; /* Mantém o flex para poder animar a saída */
+    opacity: 0 !important;
+    pointer-events: none !important; /* Desativa os cliques quando fechado */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#modal-overlay.modal-ativo {
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+/* =========================================
+   AJUSTE DE LARGURA E BOTÃO 'X' DO MODAL
+   ========================================= */
+
+/* Alarga o painel horizontalmente para uma forma mais uniforme e ampla */
+#modal-overlay .modal-body {
+  width: 90% !important;
+  max-width: 520px !important; /* Aumenta a largura máxima nas laterais */
+  padding: 24px !important;
+}
+
+/* Cabeçalho interno do modal (Título e Botão X lado a lado) */
+.modal-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--cor-borda-suave, #eaeaea);
+  padding-bottom: 10px;
+}
+
+.modal-header-flex h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--cor-texto, #333);
+}
+
+/* Estilo do Botão X de Fechar */
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--cor-texto-secundario, #7b849c);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.btn-close-modal:hover {
+  color: var(--cor-texto, #fff);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+/* =========================================
+   TRANSIÇÃO DE TELAS INTERNAS DO MODAL
+   ========================================= */
+
+.modal-view {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.modal-view.active-view {
+  display: block;
+  opacity: 1;
+}
+
+/* Card de navegação para os favoritos */
+.settings-nav-card {
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.settings-nav-card:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .settings-nav-card:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.card-content-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-subtitle {
+  margin: 4px 0 0 0;
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario, #7b849c);
+}
+
+.nav-arrow {
+  font-size: 1.2rem;
+  color: var(--cor-texto-secundario, #7b849c);
+}
+
+/* Botão de voltar */
+.btn-back-modal {
+  background: transparent;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cor-primaria, #3b82f6);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-back-modal:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+/* =========================================
+   BOTÃO DE FAVORITAR ENDEREÇO
+   ========================================= */
+.btn-favorito {
+    background-color: var(--bg-input, #ffffff);
+    border: 1px solid var(--cor-borda, #cccccc);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a0aec0; /* Cor da estrela vazia */
+    transition: all 0.2s ease;
+}
+
+.btn-favorito:hover {
+    transform: scale(1.05);
+    border-color: #f59e0b;
+    color: #f59e0b;
+}
+
+/* Classe ativada quando o endereço está salvo */
+.btn-favorito.salvo {
+    color: #f59e0b; /* Estrela amarela */
+    border-color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+/* Ajuste para o Modo Escuro */
+body.dark-mode .btn-favorito {
+    background-color: #1e2233;
+    border-color: #262b3d;
+}
+
+body.dark-mode .btn-favorito.salvo {
+    background-color: rgba(245, 158, 11, 0.15);
+}
+/* =========================================
+   AJUSTE DE LARGURA DA BARRA DE BUSCA
+   ========================================= */
+.busca-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.busca-row input {
+    flex: 1; /* Faz o campo de texto crescer ou encolher para preencher o espaço */
+    min-width: 0; /* Garante que ele possa encolher o suficiente sem quebrar o layout */
+    width: 100%;
+}
+
+.busca-row button {
+    flex-shrink: 0; /* Impede que os botões sejam esmagados pelo campo de texto */
+}
+/* ========================================== */
+/* REPOSICIONAMENTO DOS CONTROLES DO LEAFLET  */
+/* ========================================== */
+/* Empurra os botões de Zoom e Recentralizar para cima, abrindo espaço para o botão de camadas */
+.leaflet-bottom.leaflet-left {
+    bottom: 85px !important;
+    left: 10px !important;
+}
+
+/* ========================================== */
+/* NOVO BOTÃO DE CAMADAS (ESTILO GOOGLE MAPS) */
+/* ========================================== */
+#btn-camadas-maps {
+    position: fixed;
+    bottom: 25px;
+    left: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    background-color: var(--bg-painel);
+    color: var(--cor-texto-secundario);
+    border: 2px solid var(--cor-borda-suave);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+#btn-camadas-maps:hover {
+    color: var(--cor-primaria);
+    background-color: var(--bg-input);
+}
+
+/* ========================================== */
+/* PAINEL DE CAMADAS MODERNO                  */
+/* ========================================== */
+#painel-camadas-maps {
+    position: fixed;
+    bottom: 85px;
+    left: 20px;
+    width: 320px;
+    background-color: var(--bg-painel);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    /* Animação de abrir/fechar vindo de baixo */
+    transform-origin: bottom left;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+#painel-camadas-maps.painel-fechado {
+    transform: scale(0.5) translate(-50px, 50px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cabecalho-camadas-maps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--bg-quadro);
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+.cabecalho-camadas-maps h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+}
+
+#btn-fechar-camadas-maps {
+    background: none; border: none; font-size: 1.5rem;
+    color: var(--cor-texto-secundario); cursor: pointer;
+}
+
+.secao-camadas-maps {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+.secao-camadas-maps h4 {
+    margin: 0 0 12px 0;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.grid-cards-maps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+/* Os "Cards" Quadrados */
+.card-maps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s;
+}
+
+.card-maps:hover { opacity: 0.9; }
+
+.card-maps.ativo {
+    opacity: 1;
+}
+
+/* Imagens/Icones dentro dos Cards */
+.img-card-maps, .icone-card-maps {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    background-color: var(--bg-input);
+    border: 2px solid transparent;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: border-color 0.2s;
+}
+
+/* Borda colorida quando ativo */
+.card-maps.ativo .img-card-maps { border-color: var(--cor-primaria); }
+.card-maps[data-layer="enchente"].ativo .icone-card-maps { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+.card-maps[data-layer="deslizamento"].ativo .icone-card-maps { border-color: #f97316; background: rgba(249, 115, 22, 0.1); }
+.card-maps[data-layer="solo"].ativo .icone-card-maps { border-color: #8D6E63; background: rgba(141, 110, 99, 0.1); }
+
+.card-maps span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+    text-align: center;
+}
+/* ========================================== */
+/* ESTILO DO SLIDER DE TRANSPARÊNCIA (MODERNO)*/
+/* ========================================== */
+
+/* Estilo da barra (trilha) */
+#slider-opacidade-solo {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--cor-borda-suave, #e2e8f0);
+    border-radius: 10px;
+    outline: none;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Estilo da "bolinha" (thumb) para Chrome, Safari, Edge */
+#slider-opacidade-solo::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cor-primaria, #3b82f6);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#slider-opacidade-solo::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--cor-primaria-hover, #2563eb);
+}
+
+/* Estilo da "bolinha" (thumb) para Firefox */
+#slider-opacidade-solo::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--cor-primaria, #3b82f6);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#slider-opacidade-solo::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    background: var(--cor-primaria-hover, #2563eb);
+}
+/* ========================================== */
+/* CORREÇÕES DO SLIDER NO MODO ESCURO         */
+/* ========================================== */
+
+/* 1. Corrige a cor do texto "Transparência do Solo:" */
+#controle-opacidade-solo label {
+    color: var(--cor-texto) !important;
+}
+
+/* 2. Garante que o caminho da barra apareça no Modo Claro */
+#slider-opacidade-solo {
+    background: var(--cor-borda) !important; 
+}
+
+/* 3. Cria um contraste perfeito para o caminho da barra no Modo Escuro */
+body.dark-mode #slider-opacidade-solo {
+    background: rgba(255, 255, 255, 0.25) !important; /* Deixa a trilha como um cinza claro translúcido */
+}
+/* ========================================== */
+/* AJUSTES DO SELETOR DE CAMADAS PARA CELULAR */
+/* ========================================== */
+@media (max-width: 768px) {
+    /* 1. Mantém os botões de zoom do Leaflet no canto inferior esquerdo */
+    .leaflet-bottom.leaflet-left {
+        bottom: 170px !important;
+        left: 15px !important;
+    }
+
+    /* 2. Move o botão de camadas para o CANTO SUPERIOR ESQUERDO (livre de sobreposições) */
+    #btn-camadas-maps {
+        position: fixed !important;
+        top: 15px !important;
+        bottom: auto !important;
+        left: 15px !important;
+        right: auto !important;
+        z-index: 2000 !important;
+    }
+
+    /* 3. Faz o painel abrir alinhado à esquerda, logo abaixo do botão superior esquerdo */
+    #painel-camadas-maps {
+        position: fixed !important;
+        top: 70px !important; /* Abre logo abaixo do botão de camadas */
+        bottom: auto !important;
+        left: 15px !important;
+        right: auto !important;
+        width: calc(100vw - 30px) !important;
+        max-width: 300px !important;
+        max-height: calc(100vh - 150px) !important;
+        overflow-y: auto !important;
+        z-index: 2001 !important;
+        
+        /* Alinha a animação de abertura para o canto superior esquerdo */
+        transform-origin: top left;
+    }
+
+    /* Ajuste da animação de fechado para o celular */
+    #painel-camadas-maps.painel-fechado {
+        transform: scale(0.5) translate(-20px, -20px) !important;
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+/* ========================================== */
+/* ESTILO SEPARADO E PADRONIZADO DOS CONTROLES*/
+/* ========================================== */
+
+/* 1. Caixa unificada padrão de Zoom (+ e -) */
+.leaflet-control-zoom {
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    background-color: var(--bg-painel) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--cor-borda) !important;
+    margin-bottom: 8px !important; /* Dá um espaço entre o zoom e o recentralizar */
+}
+
+.leaflet-control-zoom a {
+    background-color: transparent !important;
+    color: var(--cor-texto) !important;
+    border-bottom: 1px solid var(--cor-borda-suave) !important;
+    width: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    text-indent: 0 !important;
+}
+
+.leaflet-control-zoom a:last-child {
+    border-bottom: none !important;
+}
+
+/* 2. Botão de Recentralizar (Mantido separado, mas com o mesmo design idêntico) */
+.leaflet-control-recentralizar {
+    width: 38px !important;
+    height: 38px !important;
+    background-color: var(--bg-painel) !important;
+    border: 1px solid var(--cor-borda) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(8px);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background-color 0.2s ease !important;
+}
+
+/* Efeitos Hover gerais para todos os botões */
+.leaflet-bar a:hover,
+.leaflet-control-recentralizar:hover {
+    background-color: var(--bg-input) !important;
+}
+
+.leaflet-bar a:hover svg,
+.leaflet-control-recentralizar:hover svg {
+    stroke: var(--cor-primaria) !important;
+    fill: var(--cor-primaria) !important;
+}
+
+/* Ajustes dos ícones SVG internos */
+.leaflet-bar a svg,
+.leaflet-control-recentralizar svg {
+    stroke: var(--cor-texto);
+    fill: none;
+    transition: stroke 0.2s ease, fill 0.2s ease;
+}
+/* ========================================== */
+/* REMOÇÃO DEFINITIVA DO CONTORNO EXCEDENTE   */
+/* ========================================== */
+.leaflet-control-recentralizar-wrapper {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 8px !important;
+}
+
+.leaflet-control-recentralizar-wrapper .leaflet-control-recentralizar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    background-color: var(--bg-painel) !important;
+    border: 1px solid var(--cor-borda) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(8px);
+    text-decoration: none !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.leaflet-control-recentralizar-wrapper .leaflet-control-recentralizar svg {
+    fill: var(--cor-texto) !important;
+    transition: fill 0.2s ease;
+}
+
+.leaflet-control-recentralizar-wrapper .leaflet-control-recentralizar:hover {
+    background-color: var(--bg-input) !important;
+    border-color: var(--cor-primaria) !important;
+}
+
+.leaflet-control-recentralizar-wrapper .leaflet-control-recentralizar:hover svg {
+    fill: var(--cor-primaria) !important;
+}
+/* Estilo ativo para o botão de Defesa Civil (Vermelho Alerta) */
+.card-maps[data-layer="defesacivil"].ativo .icone-card-maps { 
+    border-color: #ef4444; 
+    background: rgba(239, 68, 68, 0.1); 
+}
+/* ==========================================
+   NOVA BARRA DE BUSCA ESTILO MAPS (v1.1.7)
+========================================== */
+.barra-busca-flutuante {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 30px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    padding: 0 12px 0 20px; 
+    min-height: 52px; 
+    width: 400px;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .barra-busca-flutuante {
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.barra-busca-flutuante #input-endereco {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+    padding: 10px 0;
+    outline: none;
+}
+
+.separador-busca {
+    height: 26px;
+    width: 1px;
+    background-color: var(--cor-borda-suave);
+    margin: 0 8px;
+}
+
+/* Base dos botões */
+.barra-busca-flutuante .btn-icone {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.barra-busca-flutuante .btn-icone:hover {
+    transform: scale(1.1);
+}
+
+/* ==========================================
+   ESTILIZAÇÃO PERFEITA DA LUPA SVG
+========================================== */
+.icone-lupa-svg {
+    fill: var(--cor-texto-secundario);
+    transition: fill 0.2s ease;
+}
+
+.barra-busca-flutuante .btn-icone:hover .icone-lupa-svg {
+    fill: var(--cor-primaria);
+}
+
+.lupa-maps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+/* ==========================================
+   AJUSTES PARA CELULAR DA BARRA DE BUSCA
+========================================== */
+@media (max-width: 768px) {
+    .barra-busca-flutuante {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        width: calc(100vw - 30px);
+        min-height: 50px;
+    }
+    
+    #btn-camadas-maps { top: 85px !important; }
+    #painel-camadas-maps { top: 140px !important; }
+}
+/* ==========================================
+   AJUSTE DO BOTÃO DE FAVORITOS (SVG)
+========================================== */
+.barra-busca-flutuante #btn-favoritar {
+    padding: 8px;
+}
+
+.barra-busca-flutuante #btn-favoritar .icone-vazio {
+    fill: var(--cor-texto-secundario);
+    transition: fill 0.2s ease;
+}
+
+.barra-busca-flutuante #btn-favoritar:hover .icone-vazio {
+    fill: #f59e0b; /* Fica amarela suave ao passar o mouse */
+}
+/* ==========================================
+   NOVO VISUAL DO PAINEL DE CHUVAS (v1.1.7)
+========================================== */
+.clima-container-moderno {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 5px;
+}
+
+.clima-card-atual {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    background: var(--bg-input);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+
+.clima-icone-status {
+    font-size: 2.2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cor-borda-suave);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.clima-info-status {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.clima-rotulo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cor-texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.clima-valor-principal {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--cor-texto);
+    line-height: 1.3;
+}
+
+/* Card do Gráfico */
+.clima-card-grafico {
+    padding: 15px 18px;
+    background: var(--bg-input);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+
+.grafico-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.grafico-titulo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cor-texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.grafico-toggle {
+    display: flex;
+    background: var(--cor-borda-suave);
+    border-radius: 6px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.toggle-btn {
+    background: transparent;
+    border: none;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+    background: var(--bg-quadro);
+    color: var(--cor-texto);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Corpo do Gráfico de Barras */
+.grafico-barras-corpo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 120px;
+    padding-top: 15px;
+    padding-bottom: 2px;
+    gap: 4px;
+    overflow-x: auto;
+}
+
+.grafico-loading {
+    width: 100%;
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    font-size: 0.85rem;
+    align-self: center;
+}
+
+.barra-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+    gap: 6px;
+    min-width: 22px;
+}
+
+.barra-coluna-wrapper {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.barra-coluna {
+    width: 65%;
+    background-color: var(--cor-primaria);
+    border-radius: 4px 4px 0 0;
+    transition: height 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s;
+    position: relative;
+    min-height: 3px;
+}
+
+.barra-coluna:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+.barra-valor {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    color: var(--cor-texto-secundario);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.barra-item:hover .barra-valor {
+    opacity: 1;
+}
+
+.barra-rotulo {
+    font-size: 0.68rem;
+    color: var(--cor-texto-secundario);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.clima-nota-alerta {
+    padding: 12px 15px;
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 4px solid var(--cor-primaria);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--cor-texto);
+    opacity: 0.9;
+}
+
+.clima-nota-alerta p {
+    margin: 0;
+    line-height: 1.5;
+}
+/* ==========================================
+   CORREÇÃO RESPONSIVA PARA CELULAR (v1.1.7)
+========================================== */
+@media (max-width: 768px) {
+    
+    /* 1. Ajuste da barra de busca para não esmagar a estrela e a lupa */
+    .barra-busca-flutuante {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2000;
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 30px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 20px; /* Aumenta o espaçamento à direita para a estrela recuar para dentro da pílula */
+    min-height: 52px; 
+    width: 400px;
+    transition: all 0.3s ease;
+}
+
+    .barra-busca-flutuante #input-endereco {
+        font-size: 0.95rem; /* Letra ligeiramente menor para caber melhor */
+    }
+
+    /* 2. Empurra os botões laterais para baixo, saindo da frente da barra de busca */
+    .menu-lateral-botoes {
+        top: 75px !important; /* Desce para ficar logo abaixo da barra de busca */
+        right: 12px !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        z-index: 2000 !important;
+    }
+    
+    .btn-lateral { 
+        width: 40px !important; 
+        height: 40px !important; 
+        font-size: 1rem !important;
+    }
+
+    /* 3. Posiciona o botão de engrenagem logo abaixo da fila dos botões laterais */
+    #btn-config {
+        top: 255px !important; /* Fica abaixo dos três botões anteriores */
+        bottom: auto !important;
+        right: 12px !important;
+        width: 40px !important; 
+        height: 40px !important;
+        font-size: 20px !important;
+        z-index: 2000 !important;
+    }
+
+    /* 4. Ajusta o botão de camadas (canto superior esquerdo ou onde preferir) */
+    #btn-camadas-maps {
+        top: 75px !important;
+        left: 15px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
+/* ========================================== */
+/* CORREÇÃO DEFINITIVA DE RESOLUÇÃO NO CELULAR */
+/* ========================================== */
+@media (max-width: 768px) {
+    
+    /* 1. Barra de busca fluida e sem estourar as bordas */
+    .barra-busca-flutuante {
+        top: 15px !important;
+        left: 15px !important;
+        width: calc(100vw - 30px) !important;
+        min-height: 48px !important;
+        padding: 0 10px 0 15px !important;
+    }
+
+    .barra-busca-flutuante #input-endereco {
+        font-size: 14px !important;
+    }
+
+    /* 2. Botão de Camadas (Canto superior esquerdo, abaixo da busca) */
+    #btn-camadas-maps {
+        top: 75px !important;
+        left: 15px !important;
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    /* 3. Painel de camadas abrindo perfeitamente na tela do celular */
+    #painel-camadas-maps {
+        top: 125px !important;
+        left: 15px !important;
+        width: calc(100vw - 30px) !important;
+        max-width: none !important;
+    }
+
+    /* 4. Menu lateral de botões (Agora com 4 botões: Análise, Clima, Solo e Emergência) */
+    .menu-lateral-botoes {
+        top: 75px !important;
+        right: 15px !important;
+        gap: 8px !important;
+    }
+    
+    .btn-lateral { 
+        width: 42px !important; 
+        height: 42px !important; 
+        font-size: 1.1rem !important;
+    }
+
+    /* 5. Engrenagem de Configurações posicionada exatamente abaixo dos 4 botões */
+    #btn-config {
+        top: 310px !important; /* Desceu para acomodar o 4º botão sem encobrir nada */
+        right: 15px !important;
+        bottom: auto !important;
+        width: 42px !important; 
+        height: 42px !important;
+    }
+}
+/* ============================================================== */
+/* AJUSTES FINOS DO PAINEL DE CAMADAS PARA CELULAR (ESPAÇAMENTOS) */
+/* ============================================================== */
+@media (max-width: 768px) {
+    
+    /* 1. Reduz o preenchimento do cabeçalho do menu ("Detalhes do Mapa") */
+    .cabecalho-camadas-maps {
+        padding: 10px 15px !important;
+    }
+
+    /* 2. Reduz os espaços internos de cima e de baixo de cada categoria */
+    .secao-camadas-maps {
+        padding: 10px 15px !important;
+    }
+
+    /* 3. Diminui a distância entre os títulos ("Tipo de Mapa", etc) e os botões */
+    .secao-camadas-maps h4 {
+        margin: 0 0 8px 0 !important;
+    }
+
+    /* 4. Aproxima os botões horizontalmente e verticalmente (sem mudar o tamanho de 60px deles) */
+    .grid-cards-maps {
+        gap: 6px !important;
+    }
+
+    /* 5. A MÁGICA DO SLIDER: Cria um "fundo falso" generoso apenas no celular,
+       empurrando a barra de transparência para cima, longe da borda da tela */
+    #controle-opacidade-solo {
+        padding-bottom: 40px !important; 
+        margin-bottom: 10px !important;
+    }
+}
+/* ==========================================
+   BOTÃO E MODAL DE METODOLOGIA
+   ========================================== */
+#btn-metodologia {
+    position: fixed;
+    bottom: 80px; /* Fica 30px acima do botão de configuração */
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--bg-painel);
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: none; /* Inicia oculto, será ativado pelo JS */
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    line-height: 1;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#btn-metodologia:hover {
+    background-color: var(--bg-input);
+    transform: scale(1.05);
+}
+
+/* Base do modal herdando seu padrão visual */
+#modal-metodologia-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Transições e controle de estado do modal */
+#modal-metodologia-overlay.modal-ativo {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+#modal-metodologia-overlay.modal-oculto {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+#modal-metodologia-overlay .modal-box {
+    transform: scale(0.95) translateY(-10px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#modal-metodologia-overlay.modal-ativo .modal-box {
+    transform: scale(1) translateY(0);
+}
+
+/* Correção exata da posição no celular */
+@media (max-width: 768px) {
+    #btn-metodologia {
+        top: 360px !important; /* Posiciona logo abaixo da Engrenagem (que está em 310px) */
+        bottom: auto !important;
+        right: 15px !important;
+        width: 42px !important; 
+        height: 42px !important;
+    }
+}
+/* ==========================================
+   AUTOCOMPLETE - CAIXA DE SUGESTÕES (NOVO)
+========================================== */
+#caixa-sugestoes {
+    position: absolute;
+    top: 75px; /* Logo abaixo da barra flutuante */
+    left: 20px;
+    width: 400px;
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 1999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dark-mode #caixa-sugestoes {
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.sugestao-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--cor-borda-suave);
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.sugestao-item:last-child {
+    border-bottom: none;
+}
+
+.sugestao-item:hover {
+    background-color: var(--bg-input);
+}
+
+@media (max-width: 768px) {
+    #caixa-sugestoes {
+        top: 70px;
+        left: 15px;
+        width: calc(100vw - 30px);
+    }
+}
+/* ==========================================
+   CAIXA DE SUGESTÕES (AUTOCOMPLETE)
+========================================== */
+#caixa-sugestoes {
+    position: absolute;
+    top: 75px;
+    left: 20px;
+    width: 400px;
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 9999; /* Fica na frente absoluta de qualquer ícone, painel ou botão do mapa */
+    display: none; /* Inicia oculta */
+    flex-direction: column;
+    overflow: hidden;
+}
+
+body.dark-mode #caixa-sugestoes {
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.sugestao-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--cor-borda-suave);
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.sugestao-item:last-child {
+    border-bottom: none;
+}
+
+.sugestao-item:hover {
+    background-color: var(--bg-input);
+}
+
+/* Ajuste responsivo exato para celular */
+@media (max-width: 768px) {
+    #caixa-sugestoes {
+        top: 70px;
+        left: 15px;
+        width: calc(100vw - 30px);
+    }
+}

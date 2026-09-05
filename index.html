@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta GIS App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+
+    <div id="tela-inicial">
+        <!-- Elementos de Iluminação de Fundo (Glows) -->
+        <div class="glow-effect glow-1"></div>
+        <div class="glow-effect glow-2"></div>
+        
+        <!-- Grid Cartográfico Sutil -->
+        <div class="tech-grid"></div>
+
+        <!-- Logotipo Isolado no Topo -->
+        <div class="container-logo-inicial">
+            <img src="favicon.png" alt="Logo Delta GIS" class="img-logo-inicial">
+            <span class="marca-delta-gis">Delta GIS</span>
+        </div>
+
+        <!-- Card Central em Glassmorphism -->
+        <div class="conteudo-entrada">
+            <div class="badge-topo-inicial">
+                <span class="bolinha-pulsante"></span> Geoprocessamento Urbano
+            </div>
+            <h1>Monitoramento de Riscos Geológicos</h1>
+            <p>Análise de escoamento superficial, impermeabilização do solo e drenagem urbana em Ipatinga-MG.</p>
+            
+            <button id="btn-começar">Entrar no Sistema</button>
+            
+            <div id="loader" class="hidden">
+                <div class="spinner"></div>
+                <p>Carregando dados geoespaciais...</p>
+            </div>
+        </div>
+
+        <!-- Tag de Versão -->
+        <div class="versao-tag">
+            v1.1.9 <span class="bolinha-nova"></span>
+        </div>
+    </div>
+
+</div>
+
+    <main class="container-principal">
+        
+        <div id="mapa-alerta"></div>
+
+      <!-- NOVA BARRA DE BUSCA FLUTUANTE ESTILO MAPS (v1.1.7) -->
+        <div class="barra-busca-flutuante">
+            
+            <!-- 1. Campo de texto -->
+            <input type="text" id="input-endereco" placeholder="Pesquise no Web Map" autocomplete="off">
+            
+            <!-- Botão de Busca com Lupa SVG Ajustada -->
+            <button id="btn-buscar" class="btn-icone lupa-maps" title="Buscar">
+                <svg class="icone-lupa-svg" viewBox="0 0 24 24" width="20" height="20">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+            
+            <!-- 3. Linha divisória bem sutil -->
+            <div class="separador-busca"></div>
+            
+            <!-- 4. Estrela de Favoritos -->
+            <button id="btn-favoritar" class="btn-favorito btn-icone" title="Salvar aos Favoritos">
+                <svg class="icone-estrela icone-vazio" viewBox="0 0 24 24" width="22" height="22">
+                    <path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+                <svg class="icone-estrela icone-cheio" viewBox="0 0 24 24" width="22" height="22" style="display: none;">
+                    <path fill="#f59e0b" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+            </button>
+
+        </div> 
+       <!-- <aside class="painel-cidades">
+            <h3>Município</h3>
+            <button class="btn-cidade ativo" data-cidade="ipatinga">Ipatinga</button>
+            <button class="btn-cidade" data-cidade="juiz_de_fora" style="display: none;">Juiz de Fora</button>
+        </aside> -->
+<!-- ========================================== -->
+        <!-- NOVO BOTÃO E PAINEL DE CAMADAS (ESTILO MAPS)-->
+        <!-- ========================================== -->
+        
+        <!-- Botão flutuante que abre o menu -->
+        <button id="btn-camadas-maps" title="Camadas do Mapa">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+                <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/>
+            </svg>
+        </button>
+
+        <!-- O Painel que desliza -->
+        <div id="painel-camadas-maps" class="painel-fechado">
+            <div class="cabecalho-camadas-maps">
+                <h3>Detalhes do Mapa</h3>
+                <button id="btn-fechar-camadas-maps">&times;</button>
+            </div>
+            
+            <div class="secao-camadas-maps">
+                <h4>Tipo de Mapa</h4>
+                <div class="grid-cards-maps">
+                    <div class="card-maps ativo" data-tipo="base" data-layer="ruas">
+                        <div class="img-card-maps" style="background: #e2e8f0; border: 1px solid #cbd5e1;">🗺️</div>
+                        <span>Padrão</span>
+                    </div>
+                    <div class="card-maps" data-tipo="base" data-layer="satelite">
+                        <div class="img-card-maps" style="background: #1e293b; color: #fff;">🛰️</div>
+                        <span>Satélite</span>
+                    </div>
+                    <div class="card-maps" data-tipo="base" data-layer="topo">
+                        <div class="img-card-maps" style="background: #d4a373; color: #fff;">🏔️</div>
+                        <span>Topográfico</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="secao-camadas-maps">
+                <h4>Áreas de Risco e Mapeamento</h4>
+                <div class="grid-cards-maps">
+                    <div class="card-maps ativo" data-tipo="overlay" data-layer="enchente">
+                        <div class="icone-card-maps" style="color: #3b82f6;">🌊</div>
+                        <span>Suscetibilidade Inundação</span>
+                    </div>
+                    <div class="card-maps ativo" data-tipo="overlay" data-layer="deslizamento">
+                        <div class="icone-card-maps" style="color: #f97316;">⛰️</div>
+                        <span>Suscetibilidade Deslizamento</span>
+                    </div>
+              <div class="card-maps ativo" data-tipo="overlay" data-layer="defesacivil">
+                        <div class="icone-card-maps" style="color: #ef4444;">🚨</div>
+                        <span>Mapeamento Deslizamentos-Defesa Civil</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="secao-camadas-maps" style="border-bottom: none;">
+                <h4>Geologia</h4>
+                <div class="grid-cards-maps">
+                    <div class="card-maps" data-tipo="overlay" data-layer="solo">
+                        <div class="icone-card-maps" style="color: #8D6E63;">🌱</div>
+                        <span>Tipos de Solo</span>
+                    </div>
+                </div>
+                
+                <!-- Controle de Transparência (Oculto por padrão) -->
+                <div id="controle-opacidade-solo" class="escondido" style="margin-top: 15px; padding: 10px; background: var(--bg-input); border-radius: 8px;">
+                    <label style="font-size: 0.85rem; font-weight: bold; margin-bottom: 5px; display: block;">Transparência do Solo:</label>
+                    <input type="range" id="slider-opacidade-solo" min="0" max="1" step="0.1" value="0.6" style="width: 100%; cursor: pointer;">
+                </div>
+            </div>
+        </div>
+       <div class="menu-lateral-botoes">
+            <button class="btn-lateral ativo" id="btn-toggle-analise" title="Análise Geológica">🗺️</button>
+            <button class="btn-lateral" id="btn-toggle-clima" title="Monitor de Chuvas">🌧️</button>
+            <button class="btn-lateral" id="btn-toggle-solo" title="Condições do Solo">🌱</button>
+            <button class="btn-lateral" id="btn-toggle-autoridades" title="Contatos de Emergência">📞</button>
+        </div>
+
+        <aside class="painel-flutuante" id="painel-analise">
+            <div class="cabecalho-painel">
+                <h2>Análise do risco da área</h2>
+                
+            </div>
+            
+            
+            <div class="info-grid">
+                <div class="quadro" id="quadro-risco">
+                    <h3>Grau de Risco</h3>
+                    <p id="txt-risco">Aguardando...</p>
+                </div>
+                <div class="quadro" id="quadro-fator">
+                    <h3>Fatores Associados</h3>
+                    <p><strong>Fator:</strong> <span id="txt-fator">-</span></p>
+                    
+                </div>
+            </div>
+
+            <div class="quadro" id="quadro-recomendacoes">
+                <h3>Orientações de Segurança</h3>
+                <p id="txt-recomendacoes">Insira um endereço para ver as orientações de segurança.</p>
+            </div>
+        </aside>
+
+        <aside class="painel-flutuante painel-oculto" id="painel-clima">
+            <div class="cabecalho-painel">
+                <h2>Monitor de Chuvas</h2>
+            </div>
+            
+            <div class="clima-container-moderno">
+                <!-- Card de Condição Atual -->
+                <div class="clima-card-atual">
+                    <div class="clima-icone-status" id="icone-clima-status">☀️</div>
+                    <div class="clima-info-status">
+                        <span class="clima-rotulo">Condição Atual</span>
+                        <div id="txt-clima" class="clima-valor-principal">A carregar satélite...</div>
+                    </div>
+                </div>
+
+                <!-- Seção do Gráfico de Barras com Alternância -->
+                <div class="clima-card-grafico">
+                    <div class="grafico-cabecalho">
+                        <span class="grafico-titulo">Previsão de Precipitação</span>
+                        <!-- Botões de Alternância (Toggle) -->
+                        <div class="grafico-toggle">
+                            <button id="btn-modo-diario" class="toggle-btn active" onclick="mudarModoGrafico('diario')">Diário</button>
+                            <button id="btn-modo-semanal" class="toggle-btn" onclick="mudarModoGrafico('semanal')">Semanal</button>
+                        </div>
+                    </div>
+
+                    <!-- Container onde o gráfico de barras será desenhado -->
+                    <div id="grafico-barras-container" class="grafico-barras-corpo">
+                        <div class="grafico-loading">A carregar dados do gráfico...</div>
+                    </div>
+                </div>
+
+                <!-- Nota Informativa de Risco -->
+                <div class="clima-nota-alerta">
+                    <p>
+                        <strong>⚠️ Atenção:</strong> A chuva é o principal gatilho para deslizamentos e inundações. Monitore as áreas de risco em caso de volume elevado.
+                    </p>
+                </div>
+            </div>
+        </aside>
+        <aside class="painel-flutuante painel-oculto" id="painel-solo">
+            <div class="cabecalho-painel">
+                <h2>Condições do Solo</h2>
+            </div>
+            
+            <div class="quadro" style="text-align: center; margin-top: 15px;">
+                <h3 style="margin-bottom: 15px;">Características e Infiltração</h3>
+                
+                <div style="width: 100%; background-color: var(--bg-input); border-radius: 10px; height: 18px; overflow: hidden; margin-bottom: 12px; border: 1px solid var(--cor-borda);">
+                    <div id="barra-saturacao" style="width: 0%; height: 100%; background-color: #4CAF50; transition: width 0.8s ease, background-color 0.8s ease;"></div>
+                </div>
+                <p id="txt-saturacao" style="font-size: 1.1rem; font-weight: bold;">A calcular satélite...</p>
+                <!-- CAIXA DE ALERTA AGORA VEM LOGO ABAIXO DA SATURAÇÃO -->
+                <div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.05); border-left: 4px solid var(--cor-borda); border-radius: 4px; text-align: left;">
+                    <p id="txt-alerta-solo" style="font-size: 0.85em; margin: 0; color: var(--cor-texto); line-height: 1.5;">
+                        Aguardando dados para avaliar o coeficiente de escoamento superficial da bacia...
+                    </p>
+                </div>
+                <!-- NOVO BLOCO: PEDOLOGIA E SUSCETIBILIDADE COM DESTAQUE (MAIOR E CENTRALIZADO) -->
+                <div style="margin-top: 20px; padding: 15px; background-color: var(--bg-input); border: 1px solid var(--cor-borda-suave); border-radius: 8px; text-align: center;">
+                    <p style="margin: 0 0 12px 0; font-size: 1.05rem; color: var(--cor-texto);">
+                        <strong>Pedologia Local (Tipo de Solo)</strong><br>
+                        <span id="txt-tipo-solo" style="display: block; margin-top: 5px; font-size: 1.15rem; font-weight: bold; color: var(--cor-texto-secundario); transition: color 0.5s;">Aguardando mapa...</span>
+                    </p>
+                    <div style="height: 1px; background-color: var(--cor-borda-suave); margin: 12px 0;"></div>
+                    <p style="margin: 0; font-size: 1.05rem; color: var(--cor-texto);">
+                        <strong>Suscetibilidade ao Escoamento</strong><br>
+                        <span id="txt-suscetibilidade-solo" style="display: block; margin-top: 5px; font-size: 1.25rem; font-weight: bold; color: var(--cor-texto-secundario); transition: color 0.5s;">-</span>
+                    </p>
+                </div>
+            </div>
+        </aside>
+        <aside class="painel-flutuante painel-oculto" id="painel-autoridades">
+            <div class="cabecalho-painel">
+                <h2>Contatos de Emergência</h2>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+                <!-- Defesa Civil -->
+                <a href="tel:199" onclick="if(window.innerWidth > 768) event.preventDefault();" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--bg-input); border: 1px solid var(--cor-borda); border-radius: 12px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <div>
+                        <strong style="font-size: 1.05rem; color: #ef4444;">🚨 Defesa Civil</strong>
+                        <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: var(--cor-texto-secundario);">Atendimento a áreas de risco e deslizamentos</p>
+                    </div>
+                    <span style="font-size: 1.1rem; font-weight: bold; background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 8px 14px; border-radius: 8px;">199</span>
+                </a>
+
+                <!-- Corpo de Bombeiros -->
+                <a href="tel:193" onclick="if(window.innerWidth > 768) event.preventDefault();" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--bg-input); border: 1px solid var(--cor-borda); border-radius: 12px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <div>
+                        <strong style="font-size: 1.05rem; color: #f97316;">🚒 Corpo de Bombeiros</strong>
+                        <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: var(--cor-texto-secundario);">Resgates, inundações e salvamentos</p>
+                    </div>
+                    <span style="font-size: 1.1rem; font-weight: bold; background: rgba(249, 115, 22, 0.1); color: #f97316; padding: 8px 14px; border-radius: 8px;">193</span>
+                </a>
+
+                <!-- SAMU -->
+                <a href="tel:192" onclick="if(window.innerWidth > 768) event.preventDefault();" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--bg-input); border: 1px solid var(--cor-borda); border-radius: 12px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <div>
+                        <strong style="font-size: 1.05rem; color: #3b82f6;">🚑 SAMU</strong>
+                        <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: var(--cor-texto-secundario);">Urgência e emergência médica</p>
+                    </div>
+                    <span style="font-size: 1.1rem; font-weight: bold; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 8px 14px; border-radius: 8px;">192</span>
+                </a>
+
+                <!-- Polícia Militar -->
+                <a href="tel:190" onclick="if(window.innerWidth > 768) event.preventDefault();" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--bg-input); border: 1px solid var(--cor-borda); border-radius: 12px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <div>
+                        <strong style="font-size: 1.05rem; color: #10b981;">🛡️ Polícia Militar</strong>
+                        <p style="margin: 2px 0 0 0; font-size: 0.85rem; color: var(--cor-texto-secundario);">Segurança pública e ocorrências</p>
+                    </div>
+                    <span style="font-size: 1.1rem; font-weight: bold; background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 8px 14px; border-radius: 8px;">190</span>
+                </a>
+            </div>
+        </aside>
+    </main>
+   
+    <button id="btn-config" title="Configurações">⚙️</button>
+    <!-- NOVO BOTÃO DE METODOLOGIA -->
+    <button id="btn-metodologia" title="Observação Metodológica do Site">ℹ️</button>
+
+    <!-- NOVO MODAL DE METODOLOGIA -->
+    <div id="modal-metodologia-overlay" class="modal-oculto">
+        <div class="modal-box">
+            <div class="modal-header-flex">
+                <h3>Observação Metodológica do Site</h3> <!-- TÍTULO ALTERADO -->
+                <button id="btn-fechar-metodologia" class="btn-close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body" style="padding: 10px 0 0 0; box-shadow: none; border: none; background: transparent;">
+                <p style="font-size: 0.95rem; line-height: 1.6; color: var(--cor-texto); text-align: justify; margin: 0;">
+                    As classificações apresentadas pelo Delta GIS são resultantes da integração e análise de dados geoespaciais utilizados no projeto e possuem caráter informativo e preventivo. As áreas indicadas como ‘Mapeadas pela Defesa Civil’ correspondem aos registros oficiais incorporados à plataforma. A consulta não substitui vistoria ou avaliação técnica realizada pelos órgãos competentes.
+                </p>
+            </div>
+        </div>
+    </div>
+   <!-- MODAL DE CONFIGURAÇÕES -->
+    <div id="modal-overlay" class="modal-oculto">
+        <div class="modal-body">
+            
+            <!-- ========================================== -->
+            <!-- TELA 1: CONFIGURAÇÕES GERAIS (PADRÃO)      -->
+            <!-- ========================================== -->
+            <div id="modal-view-config" class="modal-view active-view">
+                
+                <div class="modal-header-flex">
+                    <h3>Configurações</h3>
+                    <button id="btn-fechar-modal" class="btn-close-modal">&times;</button>
+                </div>
+
+                <!-- Card 1: Aparência -->
+                <div class="settings-card">
+                    <h4>Aparência</h4>
+                    <div class="segmented-control">
+                        <button id="btn-theme-light" class="segment-btn active">☀️ Claro</button>
+                        <button id="btn-theme-dark" class="segment-btn">🌙 Escuro</button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Acessibilidade -->
+                <div class="settings-card">
+                    <h4>Tamanho do Texto</h4>
+                    <div class="segmented-control">
+                        <button id="btn-font-decrease" class="segment-btn">A-</button>
+                        <button id="btn-font-default" class="segment-btn active">Padrão</button>
+                        <button id="btn-font-increase" class="segment-btn">A+</button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Histórico -->
+                <div class="settings-card">
+                    <div class="card-header-flex">
+                        <h4>Histórico Recente</h4>
+                        <button id="btn-clear-history" class="btn-clear-text">🗑️ Limpar</button>
+                    </div>
+                    <ul id="history-list" class="modern-list">
+                        <li class="empty-state">Nenhuma pesquisa recente.</li>
+                    </ul>
+                </div>
+                
+                <!-- Card 4: Acesso à tela de Favoritos -->
+                <div class="settings-card settings-nav-card" id="btn-abrir-favoritos">
+                    <div class="card-content-flex">
+                        <div>
+                            <h4>Endereços Favoritos</h4>
+                            <p class="card-subtitle">Gerencie seus locais salvos</p>
+                        </div>
+                        <span class="nav-arrow">➔</span>
+                    </div>
+                </div>
+
+                <div class="versao-modal">
+                    Delta GIS v1.1.9
+                </div>
+
+            </div> <!-- FIM DA TELA 1 -->
+
+            <!-- ========================================== -->
+            <!-- TELA 2: ENDEREÇOS FAVORITOS (SUB-TELA)     -->
+            <!-- ========================================== -->
+            <div id="modal-view-favorites" class="modal-view">
+                
+                <div class="modal-header-flex">
+                    <button id="btn-voltar-config" class="btn-back-modal">❮ Voltar</button>
+                    <h3>Favoritos Salvos</h3>
+                    <button id="btn-fechar-modal-fav" class="btn-close-modal">&times;</button>
+                </div>
+
+                <!-- Lista de Favoritos -->
+                <div class="settings-card">
+                    <div id="lista-enderecos-favoritos" class="modern-list">
+                        <div class="empty-state">Nenhum endereço favorito salvo ainda.</div>
+                    </div>
+                </div>
+
+            </div> <!-- FIM DA TELA 2 -->
+
+        </div>
+    </div> <!-- Fim do modal-body e modal-overlay -->
+
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Toast de Notificação v1.1.9 -->
+    <div id="toast-novidades" class="toast-escondido">
+        <div class="toast-conteudo">
+            <span class="badge-neon">v1.1.9</span>
+            <div class="toast-texto">
+                <strong>Novos Recursos Disponíveis</strong>
+                <p>Atalhos de teclado e melhorias de usabilidade.</p>
+                <button id="btn-abrir-popup" class="btn-link-neon">Ver detalhes da atualização</button>
+            </div>
+            <button id="btn-fechar-toast">&times;</button>
+        </div>
+    </div>
+
+    <!-- Fundo com Blur (Backdrop) -->
+    <div id="fundo-blur" class="escondido"></div>
+
+    <!-- Popup Central de Detalhes -->
+    <div id="popup-detalhes-v116" class="escondido">
+        <div class="popup-cabecalho">
+            <h3>📢 Atualização v1.1.9</h3>
+            <button id="btn-fechar-popup">&times;</button>
+        </div>
+        <div class="popup-corpo">
+            <ul class="lista-novidades">
+                <li><strong>Melhorias Visuais:</strong> Nova tela inicial com design moderno.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
