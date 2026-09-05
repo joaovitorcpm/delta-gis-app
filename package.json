@@ -35,10 +35,11 @@
       "installerSidebar": "build/sidebar.bmp"
     },
     "publish": [
-      {
-        "provider": "generic",
-        "url": "https://seusite.com.br/atualizacoes"
-      }
+    {
+      "provider": "github",
+      "owner": "joaovitorcpm",
+      "repo": "delta-gis-app"
+    }
     ]
   }
 }

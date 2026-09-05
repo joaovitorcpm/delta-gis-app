@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const { autoUpdater } = require('electron-updater');
-
+const { autoUpdater } = require("electron-updater");
 let mainWindow;
 
 function createWindow() {
@@ -23,7 +23,6 @@ function createWindow() {
 // Quando o Electron estiver pronto, abre a janela
 app.whenReady().then(() => {
   createWindow();
-
   // Dispara a verificação de atualizações no fundo
   autoUpdater.checkForUpdatesAndNotify();
 
