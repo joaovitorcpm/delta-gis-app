@@ -1313,45 +1313,33 @@ body {
 /* =========================================
    AJUSTE DE CORES DO MODAL NO MODO ESCURO
    ========================================= */
-/* Fundo principal do modal (Azul-marinho escuro combinando com o Monitor) */
-body.dark-mode .modal-body {
-  background-color: #161925 !important; 
-  border-color: #262b3d !important;
+body.dark-mode {
+    --bg-painel: rgba(24, 26, 27, 0.95);
+    --bg-quadro: #242728;
+    --bg-input: #2d3132;
+    --cor-texto: #e4e6eb;
+    --cor-texto-secundario: #a0a5ab;
+    --cor-borda: #3d4244;
+    --cor-borda-suave: #3d4244;
+    --cor-primaria: #4a7fc1;
+    --cor-primaria-hover: #5a8ed5;
+    --sombra-painel: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
+/* =========================================
+   AJUSTE DE CORES DO MODAL cores alternativas
+   ========================================= */
 
-/* Fundo dos cartões internos (Um tom levemente mais claro para dar profundidade) */
-body.dark-mode .settings-card {
-  background-color: #1e2233 !important; 
-  border-color: #262b3d !important;
-}
-
-/* Cor dos títulos e textos */
-body.dark-mode .settings-card h4, 
-body.dark-mode .card-header-flex h4,
-body.dark-mode .modern-list li {
-  color: #e0e6ed !important;
-}
-
-/* Fundo da "calha" onde ficam os botões de seleção */
-body.dark-mode .segmented-control {
-  background-color: #0f111a !important; 
-}
-
-/* Texto dos botões que NÃO estão selecionados */
-body.dark-mode .segment-btn {
-  color: #7b849c !important;
-}
-
-/* Botão Selecionado (Destaque) */
-body.dark-mode .segment-btn.active {
-  background-color: #2a3047 !important; 
-  color: #ffffff !important;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-}
-
-/* O texto de lista vazia do histórico */
-body.dark-mode .empty-state {
-  color: #7b849c !important;
+body.alt-mode {
+    --bg-painel: rgba(18, 16, 15, 0.95);
+    --bg-quadro: #262220;
+    --bg-input: #332d29;
+    --cor-texto: #f4f0eb;
+    --cor-texto-secundario: #b0a49c;
+    --cor-borda: #4a413b;
+    --cor-borda-suave: #3d342f;
+    --cor-primaria: #d97706;
+    --cor-primaria-hover: #f59e0b;
+    --sombra-painel: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 /* =========================================
    CORREÇÃO DE CLIQUES E MODAL (v1.1.6)
@@ -2582,5 +2570,475 @@ body.dark-mode #caixa-sugestoes {
         top: 70px;
         left: 15px;
         width: calc(100vw - 30px);
+    }
+}
+/* ==========================================
+   PAINEL DE CONFIGURAÇÕES - ESTILO MAPS POLIDO
+   ========================================== */
+#modal-overlay .maps-modal-container {
+    background-color: var(--bg-painel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--cor-borda);
+    border-radius: 24px;
+    width: 95% !important;
+    max-width: 580px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: mapsModalFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mapsModalFade {
+    from { opacity: 0; transform: scale(0.96) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.maps-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 24px 14px 24px;
+}
+
+.maps-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.maps-modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+    letter-spacing: -0.01em;
+}
+
+.maps-close-btn, .maps-back-btn {
+    background: transparent;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.maps-close-btn:hover, .maps-back-btn:hover {
+    background-color: var(--cor-borda-suave);
+    color: var(--cor-texto);
+}
+
+.maps-back-btn {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.maps-modal-body {
+    padding: 0 24px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.maps-modal-body::-webkit-scrollbar {
+    width: 4px;
+}
+.maps-modal-body::-webkit-scrollbar-thumb {
+    background-color: var(--cor-borda);
+    border-radius: 4px;
+}
+
+/* Cartões de Opções (Estilo Blocos Arredondados do Maps) */
+.maps-setting-card, .maps-nav-card {
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda-suave);
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maps-setting-card:hover, .maps-nav-card:hover {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.maps-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.maps-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.maps-card-desc {
+    font-size: 0.8rem;
+    color: var(--cor-texto-secundario);
+}
+
+/* Controles Segmentados em Pílula */
+.maps-segmented {
+    display: flex;
+    background-color: var(--bg-input);
+    border-radius: 20px;
+    padding: 3px;
+    border: 1px solid var(--cor-borda-suave);
+    flex-shrink: 0;
+}
+
+.maps-seg-btn {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.maps-seg-btn:hover {
+    color: var(--cor-texto);
+}
+
+.maps-seg-btn.active {
+    background-color: var(--bg-painel);
+    color: var(--cor-primaria);
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .maps-seg-btn.active {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Card de Navegação (Favoritos) */
+.maps-nav-card {
+    cursor: pointer;
+}
+
+.maps-chevron {
+    font-size: 1.4rem;
+    color: var(--cor-texto-secundario);
+    font-weight: 300;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.maps-nav-card:hover .maps-chevron {
+    transform: translateX(3px);
+    color: var(--cor-primaria);
+}
+
+/* Histórico Recente */
+.maps-history-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.maps-history-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.maps-text-btn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.maps-text-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.maps-history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.maps-history-list li {
+    padding: 10px 14px;
+    background-color: var(--bg-input);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: var(--cor-texto);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    border: 1px solid var(--cor-borda-suave);
+}
+
+.maps-history-list li:hover {
+    background-color: var(--cor-borda-suave);
+    border-color: var(--cor-primaria);
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--cor-texto-secundario) !important;
+    font-style: normal !important;
+    background: transparent !important;
+    padding: 12px 0 !important;
+    cursor: default !important;
+    border: none !important;
+}
+
+/* Rodapé do Modal */
+.maps-modal-footer {
+    padding: 14px 24px;
+    background-color: var(--bg-input);
+    border-top: 1px solid var(--cor-borda-suave);
+    font-size: 0.78rem;
+    color: var(--cor-texto-secundario);
+    text-align: center;
+}
+/* ==========================================
+   BARRA DE ROLAGEM HORIZONTAL DO GRÁFICO - ATUALIZADA
+   ========================================== */
+
+/* Estilização moderna e fluida para a barra de rolagem horizontal do gráfico */
+#grafico-barras-container {
+    scrollbar-width: thin;
+    scrollbar-color: var(--cor-borda) var(--bg-input);
+}
+
+#grafico-barras-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+#grafico-barras-container::-webkit-scrollbar-track {
+    background: var(--bg-input);
+    border-radius: 4px;
+}
+
+#grafico-barras-container::-webkit-scrollbar-thumb {
+    background-color: var(--cor-borda);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+#grafico-barras-container::-webkit-scrollbar-thumb:hover {
+    background-color: var(--cor-primaria);
+}
+
+/* ==========================================
+   BOTAO DE VOLTAR A TELA INICIAL (HOME)
+   ========================================== */
+
+/* Botão Flutuante de Retorno à Home */
+#btn-voltar-home {
+    position: fixed;
+    bottom: 140px; /* Ajuste a altura para ficar exatamente acima do botão de metodologia */
+    right: 20px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+#btn-voltar-home:hover {
+    background-color: var(--cor-borda-suave);
+    border-color: var(--cor-primaria);
+    transform: scale(1.05);
+}
+/* ==========================================
+   NOVO BOTÃO HOME E MODAL (ISOLADO E BLINDADO)
+========================================== */
+
+/* O Botão Flutuante */
+#btn-nova-home {
+    position: fixed;
+    bottom: 140px; /* Altura original */
+    right: 20px;
+    z-index: 2000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--bg-quadro);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    cursor: pointer;
+    
+    /* TRAVA ABSOLUTA DE OPACIDADE E CLIQUE */
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Estados do botão travados - Nunca ficará transparente */
+#btn-nova-home:hover,
+#btn-nova-home:focus,
+#btn-nova-home:active {
+    background-color: var(--cor-borda-suave) !important;
+    border-color: var(--cor-primaria) !important;
+    color: var(--cor-texto) !important;
+    opacity: 1 !important;
+    transform: scale(1.05);
+}
+
+/* O Modal (Fundo Escuro) */
+#modal-nova-home {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Escondido por padrão */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Classe ativada via JS para exibir o modal */
+#modal-nova-home.aberto {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* A Caixinha Branca */
+.caixa-nova-home {
+    background-color: var(--bg-painel);
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#modal-nova-home.aberto .caixa-nova-home {
+    transform: scale(1);
+}
+
+/* Textos da Caixinha */
+.cabecalho-nova-home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.cabecalho-nova-home h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--cor-texto);
+}
+
+#btn-fechar-nova-home {
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    line-height: 1;
+}
+
+#btn-fechar-nova-home:hover { color: var(--cor-texto); }
+
+.corpo-nova-home p {
+    margin: 0 0 20px 0;
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.rodape-nova-home {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid var(--cor-borda-suave);
+    padding-top: 15px;
+}
+
+/* Botões da Caixinha */
+.btn-secundario, .btn-perigo {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+}
+
+.btn-secundario:hover { background-color: var(--cor-borda-suave); }
+
+.btn-perigo {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-perigo:hover { background-color: #dc2626; }
+
+/* Responsividade do Botão Novo */
+@media (max-width: 768px) {
+    #btn-nova-home {
+        top: 410px !important;
+        bottom: auto !important;
+        right: 15px !important;
+        width: 42px !important; 
+        height: 42px !important;
     }
 }

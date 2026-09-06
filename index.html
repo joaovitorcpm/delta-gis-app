@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delta GIS App</title>
+    <title>Delta GIS Web</title>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
@@ -307,7 +307,29 @@
     <button id="btn-config" title="Configurações">⚙️</button>
     <!-- NOVO BOTÃO DE METODOLOGIA -->
     <button id="btn-metodologia" title="Observação Metodológica do Site">ℹ️</button>
+    
+<button id="btn-nova-home" title="Voltar à Tela Inicial" style="display: none;">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="pointer-events: none;">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" style="pointer-events: none;"/>
+    </svg>
+</button>
 
+<!-- O Modal -->
+<div id="modal-nova-home">
+    <div class="caixa-nova-home">
+        <div class="cabecalho-nova-home">
+            <h3>Voltar ao Início</h3>
+            <button id="btn-fechar-nova-home">&times;</button>
+        </div>
+        <div class="corpo-nova-home">
+            <p>Deseja realmente voltar para a tela inicial? O sistema será reiniciado.</p>
+        </div>
+        <div class="rodape-nova-home">
+            <button id="btn-cancelar-nova-home" class="btn-secundario">Cancelar</button>
+            <button id="btn-confirmar-nova-home" class="btn-perigo">Sim, sair</button>
+        </div>
+    </div>
+</div>
     <!-- NOVO MODAL DE METODOLOGIA -->
     <div id="modal-metodologia-overlay" class="modal-oculto">
         <div class="modal-box">
@@ -323,89 +345,105 @@
             </div>
         </div>
     </div>
-   <!-- MODAL DE CONFIGURAÇÕES -->
+   <!-- MODAL DE CONFIGURAÇÕES (ESTILO GOOGLE MAPS REFINADO) -->
     <div id="modal-overlay" class="modal-oculto">
-        <div class="modal-body">
+        <div class="maps-modal-container">
             
-            <!-- ========================================== -->
-            <!-- TELA 1: CONFIGURAÇÕES GERAIS (PADRÃO)      -->
-            <!-- ========================================== -->
+            <!-- TELA 1: CONFIGURAÇÕES GERAIS -->
             <div id="modal-view-config" class="modal-view active-view">
-                
-                <div class="modal-header-flex">
+                <div class="maps-modal-header">
                     <h3>Configurações</h3>
-                    <button id="btn-fechar-modal" class="btn-close-modal">&times;</button>
+                    <button id="btn-fechar-modal" class="maps-close-btn">&times;</button>
                 </div>
 
-                <!-- Card 1: Aparência -->
-                <div class="settings-card">
-                    <h4>Aparência</h4>
-                    <div class="segmented-control">
-                        <button id="btn-theme-light" class="segment-btn active">☀️ Claro</button>
-                        <button id="btn-theme-dark" class="segment-btn">🌙 Escuro</button>
-                    </div>
-                </div>
-
-                <!-- Card 2: Acessibilidade -->
-                <div class="settings-card">
-                    <h4>Tamanho do Texto</h4>
-                    <div class="segmented-control">
-                        <button id="btn-font-decrease" class="segment-btn">A-</button>
-                        <button id="btn-font-default" class="segment-btn active">Padrão</button>
-                        <button id="btn-font-increase" class="segment-btn">A+</button>
-                    </div>
-                </div>
-
-                <!-- Card 3: Histórico -->
-                <div class="settings-card">
-                    <div class="card-header-flex">
-                        <h4>Histórico Recente</h4>
-                        <button id="btn-clear-history" class="btn-clear-text">🗑️ Limpar</button>
-                    </div>
-                    <ul id="history-list" class="modern-list">
-                        <li class="empty-state">Nenhuma pesquisa recente.</li>
-                    </ul>
-                </div>
-                
-                <!-- Card 4: Acesso à tela de Favoritos -->
-                <div class="settings-card settings-nav-card" id="btn-abrir-favoritos">
-                    <div class="card-content-flex">
-                        <div>
-                            <h4>Endereços Favoritos</h4>
-                            <p class="card-subtitle">Gerencie seus locais salvos</p>
+                <div class="maps-modal-body">
+                    <!-- Card: Tema -->
+                    <div class="maps-setting-card">
+                        <div class="maps-card-info">
+                            <span class="maps-card-title">Tema do sistema</span>
+                            <span class="maps-card-desc">Alterne entre o modo claro ou escuro</span>
                         </div>
-                        <span class="nav-arrow">➔</span>
+                        <div class="maps-segmented">
+                            <button id="btn-theme-light" class="maps-seg-btn active">Claro</button>
+                            <button id="btn-theme-dark" class="maps-seg-btn">Escuro</button>
+                            <button id="btn-theme-alt" class="maps-seg-btn">Alternativo</button>
+                        </div>
+                    </div>
+
+                    <!-- Card: Acessibilidade (Fonte) -->
+                    <div class="maps-setting-card">
+                        <div class="maps-card-info">
+                            <span class="maps-card-title">Tamanho do texto</span>
+                            <span class="maps-card-desc">Ajuste a escala da tipografia</span>
+                        </div>
+                        <div class="maps-segmented">
+                            <button id="btn-font-decrease" class="maps-seg-btn">A-</button>
+                            <button id="btn-font-default" class="maps-seg-btn active">Normal</button>
+                            <button id="btn-font-increase" class="maps-seg-btn">A+</button>
+                        </div>
+                    </div>
+                <!-- Card: Camada Inicial Padrão -->
+                    <div class="maps-setting-card">
+                        <div class="maps-card-info">
+                            <span class="maps-card-title">Camada inicial padrão</span>
+                            <span class="maps-card-desc">Escolha o mapa base ao abrir o sistema</span>
+                        </div>
+                        <div class="maps-segmented">
+                            <button id="btn-layer-ruas" class="maps-seg-btn active">Padrão</button>
+                            <button id="btn-layer-satelite" class="maps-seg-btn">Satélite</button>
+                            <button id="btn-layer-topo" class="maps-seg-btn">Topo</button>
+                        </div>
+                    </div>
+                    <!-- Card de Navegação: Favoritos -->
+                    <div class="maps-nav-card" id="btn-abrir-favoritos">
+                        <div class="maps-card-info">
+                            <span class="maps-card-title">Endereços favoritos</span>
+                            <span class="maps-card-desc">Gerencie seus locais salvos no mapa</span>
+                        </div>
+                        <span class="maps-chevron">›</span>
+                    </div>
+
+                    <!-- Card: Histórico Recente -->
+                    <div class="maps-setting-card maps-history-wrapper">
+                        <div class="maps-history-top">
+                            <div>
+                                <span class="maps-card-title">Pesquisas recentes</span>
+                                <span class="maps-card-desc">Seus últimos locais buscados</span>
+                            </div>
+                            <button id="btn-clear-history" class="maps-text-btn">Limpar</button>
+                        </div>
+                        <ul id="history-list" class="maps-history-list">
+                            <li class="empty-state">Nenhuma pesquisa recente.</li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="versao-modal">
-                    Delta GIS v1.1.9
+                <div class="maps-modal-footer">
+                    <span>Delta GIS &bull; v1.1.9</span>
                 </div>
+            </div>
 
-            </div> <!-- FIM DA TELA 1 -->
-
-            <!-- ========================================== -->
-            <!-- TELA 2: ENDEREÇOS FAVORITOS (SUB-TELA)     -->
-            <!-- ========================================== -->
+            <!-- TELA 2: ENDEREÇOS FAVORITOS -->
             <div id="modal-view-favorites" class="modal-view">
-                
-                <div class="modal-header-flex">
-                    <button id="btn-voltar-config" class="btn-back-modal">❮ Voltar</button>
-                    <h3>Favoritos Salvos</h3>
-                    <button id="btn-fechar-modal-fav" class="btn-close-modal">&times;</button>
+                <div class="maps-modal-header">
+                    <div class="maps-header-left">
+                        <button id="btn-voltar-config" class="maps-back-btn">‹</button>
+                        <h3>Favoritos</h3>
+                    </div>
+                    <button id="btn-fechar-modal-fav" class="maps-close-btn">&times;</button>
                 </div>
 
-                <!-- Lista de Favoritos -->
-                <div class="settings-card">
-                    <div id="lista-enderecos-favoritos" class="modern-list">
-                        <div class="empty-state">Nenhum endereço favorito salvo ainda.</div>
+                <div class="maps-modal-body">
+                    <div class="maps-setting-card">
+                        <div id="lista-enderecos-favoritos" class="maps-history-list" style="max-height: 320px; overflow-y: auto;">
+                            <div class="empty-state">Nenhum endereço favorito salvo ainda.</div>
+                        </div>
                     </div>
                 </div>
-
-            </div> <!-- FIM DA TELA 2 -->
+            </div>
 
         </div>
-    </div> <!-- Fim do modal-body e modal-overlay -->
+    </div>
 
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

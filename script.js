@@ -1,28 +1,3 @@
-// ==========================================
-// 1. TELA INICIAL (LANDING PAGE) E TEMA
-// ==========================================
-const telaInicial = document.getElementById('tela-inicial');
-const btnComecar = document.getElementById('btn-começar');
-const loader = document.getElementById('loader');
-
-btnComecar.addEventListener('click', () => {
-    btnComecar.classList.add('hidden');
-    loader.classList.remove('hidden');
-    
-    setTimeout(() => {
-        telaInicial.classList.add('fade-out');
-        
-        setTimeout(() => {
-            mapa.invalidateSize();
-            telaInicial.style.display = 'none'; 
-            
-            // --- ESTA LINHA FAZ O BOTÃO APARECER SÓ AGORA ---
-            document.getElementById('btn-config').style.display = 'flex';
-            // ------------------------------------------------
-            
-        }, 800);
-    }, 2000);
-});
 
 // ==========================================
 // 2. INICIALIZAÇÃO E CONFIGURAÇÃO DAS CIDADES
@@ -42,9 +17,19 @@ mapa.createPane('paneLimite');
 mapa.getPane('paneLimite').style.zIndex = 450;
 mapa.getPane('paneLimite').style.pointerEvents = 'none';
 
-const mapaRuas = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, maxNativeZoom: 19 }).addTo(mapa);
+const mapaRuas = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 20, maxNativeZoom: 19 });
 const mapaSatelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 21, maxNativeZoom: 18 });
 const mapaTopografico = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, maxNativeZoom: 17, attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)' });
+
+// Define e adiciona ao mapa a camada inicial escolhida nas configurações
+const camadaInicialPreferida = localStorage.getItem("camada_padrao") || "ruas";
+let mapaBaseAtivo = mapaRuas;
+if (camadaInicialPreferida === "satelite") {
+    mapaBaseAtivo = mapaSatelite;
+} else if (camadaInicialPreferida === "topo") {
+    mapaBaseAtivo = mapaTopografico;
+}
+mapaBaseAtivo.addTo(mapa);
 const iconeVermelho = L.divIcon({
     className: 'custom-pin-wrapper',
     html: `
@@ -852,15 +837,14 @@ mapa.on('moveend', atualizarClimaParaLocalNoMapa);
 // 11. PERSISTÊNCIA DE PREFERÊNCIAS (Atualizado v1.1.6)
 // ==========================================
 function carregarPreferencias() {
-    // 1. Carrega o Tema
     const temaGuardado = localStorage.getItem('tema_app');
+    document.body.classList.remove('dark-mode', 'alt-mode');
     if (temaGuardado === 'dark') {
         document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.remove('dark-mode');
+    } else if (temaGuardado === 'alternativo') {
+        document.body.classList.add('alt-mode');
     }
 
-    // 2. Carrega o Tamanho da Fonte
     const fonteSalva = localStorage.getItem('tamanho_fonte');
     if (fonteSalva) {
         document.body.classList.remove('font-small', 'font-large');
@@ -914,26 +898,31 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    // --- CONTROLE DE TEMA ---
     const btnLight = document.getElementById("btn-theme-light");
     const btnDark = document.getElementById("btn-theme-dark");
+    const btnAlt = document.getElementById("btn-theme-alt");
 
-    // Sincroniza os botões visuais E o tema ao carregar
     const temaSalvo = localStorage.getItem("tema_app");
 
+    document.body.classList.remove('dark-mode', 'alt-mode');
+    if(btnLight) btnLight.classList.remove("active");
+    if(btnDark) btnDark.classList.remove("active");
+    if(btnAlt) btnAlt.classList.remove("active");
+
     if (temaSalvo === "dark") {
-        document.body.classList.add('dark-mode'); // Garante que o fundo fique escuro
+        document.body.classList.add('dark-mode');
         if(btnDark) btnDark.classList.add('active');
-        if(btnLight) btnLight.classList.remove('active');
+    } else if (temaSalvo === "alternativo") {
+        document.body.classList.add('alt-mode');
+        if(btnAlt) btnAlt.classList.add('active');
     } else {
-        document.body.classList.remove('dark-mode'); // Garante que o fundo fique claro
         if(btnLight) btnLight.classList.add('active');
-        if(btnDark) btnDark.classList.remove('active');
     }
 
-    if (btnLight && btnDark) {
+    if (btnLight && btnDark && btnAlt) {
         btnLight.addEventListener("click", () => alterarTema("light"));
         btnDark.addEventListener("click", () => alterarTema("dark"));
+        btnAlt.addEventListener("click", () => alterarTema("alternativo"));
     }
 
     // --- CONTROLE DE TAMANHO DE FONTE ---
@@ -960,16 +949,23 @@ document.addEventListener("DOMContentLoaded", () => {
 function alterarTema(tema) {
     const btnLight = document.getElementById("btn-theme-light");
     const btnDark = document.getElementById("btn-theme-dark");
+    const btnAlt = document.getElementById("btn-theme-alt");
+
+    document.body.classList.remove("dark-mode", "alt-mode");
+    if(btnLight) btnLight.classList.remove("active");
+    if(btnDark) btnDark.classList.remove("active");
+    if(btnAlt) btnAlt.classList.remove("active");
 
     if (tema === "dark") {
         document.body.classList.add("dark-mode");
         if(btnDark) btnDark.classList.add("active");
-        if(btnLight) btnLight.classList.remove("active");
         localStorage.setItem("tema_app", "dark");
+    } else if (tema === "alternativo") {
+        document.body.classList.add("alt-mode");
+        if(btnAlt) btnAlt.classList.add("active");
+        localStorage.setItem("tema_app", "alternativo");
     } else {
-        document.body.classList.remove("dark-mode");
         if(btnLight) btnLight.classList.add("active");
-        if(btnDark) btnDark.classList.remove("active");
         localStorage.setItem("tema_app", "light");
     }
 }
@@ -1176,25 +1172,95 @@ function verificarNovidades() {
 }
 
 // ==========================================
-// SUA TELA INICIAL (Como deve ficar agora)
+// CONTROLE COMPLETO: TELA INICIAL E BOTÃO HOME
 // ==========================================
-btnComecar.addEventListener('click', () => {
-    btnComecar.classList.add('hidden');
-    loader.classList.remove('hidden');
+document.addEventListener("DOMContentLoaded", () => {
+    const btnComecar = document.getElementById("btn-começar");
+    const loader = document.getElementById("loader");
+    const telaInicial = document.getElementById("tela-inicial");
     
-    setTimeout(() => {
-        telaInicial.classList.add('fade-out');
-        
-        setTimeout(() => {
-            mapa.invalidateSize();
-            telaInicial.style.display = 'none'; 
-            document.getElementById('btn-config').style.display = 'flex';
-            document.getElementById('btn-metodologia').style.display = 'flex';
-            // CHAMA O TOAST AQUI, SEM CONFLITOS!
-            verificarNovidades(); 
+    const btnVoltarHome = document.getElementById("btn-voltar-home");
+    const modalConfirm = document.getElementById("modal-confirm-overlay");
+    const btnFecharConfirm = document.getElementById("btn-fechar-confirm");
+    const btnCancelarSaida = document.getElementById("btn-cancelar-saida");
+    const btnConfirmarSaida = document.getElementById("btn-confirmar-saida");
+
+    // 1. Ação de Entrar no Sistema
+    if (btnComecar) {
+        btnComecar.addEventListener("click", () => {
+            btnComecar.classList.add("hidden");
+            if (loader) loader.classList.remove("hidden");
             
-        }, 800);
-    }, 2000);
+            setTimeout(() => {
+                if (telaInicial) telaInicial.classList.add("fade-out");
+                
+                setTimeout(() => {
+                    if (typeof mapa !== 'undefined' && mapa.invalidateSize) {
+                        mapa.invalidateSize();
+                    }
+                    if (telaInicial) telaInicial.style.display = "none"; 
+                    
+                    // Exibe os botões flutuantes do sistema
+                    const btnConfig = document.getElementById("btn-config");
+                    const btnMetodologia = document.getElementById("btn-metodologia");
+                    
+                    if (btnConfig) btnConfig.style.display = "flex";
+                    if (btnMetodologia) btnMetodologia.style.display = "flex";
+                    if (btnVoltarHome) btnVoltarHome.style.display = "flex";
+                    
+                    if (typeof verificarNovidades === "function") {
+                        verificarNovidades();
+                    }
+                    
+                }, 800);
+            }, 2000);
+        });
+    }
+
+    // 2. Ação de Abrir o Modal de Confirmação da Home
+    if (btnVoltarHome && modalConfirm) {
+        btnVoltarHome.addEventListener("click", () => {
+            modalConfirm.classList.remove("modal-oculto");
+            modalConfirm.classList.add("modal-ativo");
+        });
+    }
+
+    // 3. Fechar o Modal sem sair
+    const fecharModalConfirm = () => {
+        if (modalConfirm) {
+            modalConfirm.classList.remove("modal-ativo");
+            modalConfirm.classList.add("modal-oculto");
+        }
+    };
+
+    if (btnFecharConfirm) btnFecharConfirm.addEventListener("click", fecharModalConfirm);
+    if (btnCancelarSaida) btnCancelarSaida.addEventListener("click", fecharModalConfirm);
+    if (modalConfirm) {
+        modalConfirm.addEventListener("click", (e) => {
+            if (e.target === modalConfirm) fecharModalConfirm();
+        });
+    }
+
+    // 4. Confirmar a saída e retornar para a Tela Inicial
+    if (btnConfirmarSaida && telaInicial) {
+        btnConfirmarSaida.addEventListener("click", () => {
+            fecharModalConfirm();
+
+            // Mostra novamente a tela inicial limpa
+            telaInicial.style.display = "flex";
+            telaInicial.classList.remove("fade-out");
+
+            if (btnComecar) btnComecar.classList.remove("hidden");
+            if (loader) loader.classList.add("hidden");
+
+            // Esconde os botões flutuantes novamente
+            const btnConfig = document.getElementById("btn-config");
+            const btnMetodologia = document.getElementById("btn-metodologia");
+            if (btnConfig) btnConfig.style.display = "none";
+            if (btnMetodologia) btnMetodologia.style.display = "none";
+            if (btnVoltarHome) btnVoltarHome.style.display = "none";
+        });
+    }
 });
 // ==========================================
 // LÓGICA DO POPUP DE DETALHES (v1.1.6)
@@ -1526,6 +1592,137 @@ document.addEventListener("DOMContentLoaded", () => {
                 modalMetodologiaOverlay.classList.remove('modal-ativo');
                 modalMetodologiaOverlay.classList.add('modal-oculto');
             }
+        });
+    }
+});
+// ==========================================
+// CONFIGURAÇÃO DE CAMADA INICIAL PADRÃO
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const btnLayerRuas = document.getElementById("btn-layer-ruas");
+    const btnLayerSatelite = document.getElementById("btn-layer-satelite");
+    const btnLayerTopo = document.getElementById("btn-layer-topo");
+
+    if (btnLayerRuas && btnLayerSatelite && btnLayerTopo) {
+        const camadaSalva = localStorage.getItem("camada_padrao") || "ruas";
+        atualizarBotoesCamadaPadrao(camadaSalva);
+
+        btnLayerRuas.addEventListener("click", () => definirCamadaPadrao("ruas"));
+        btnLayerSatelite.addEventListener("click", () => definirCamadaPadrao("satelite"));
+        btnLayerTopo.addEventListener("click", () => definirCamadaPadrao("topo"));
+    }
+});
+
+function definirCamadaPadrao(tipo) {
+    localStorage.setItem("camada_padrao", tipo);
+    atualizarBotoesCamadaPadrao(tipo);
+}
+
+function atualizarBotoesCamadaPadrao(tipo) {
+    const botoes = {
+        ruas: document.getElementById("btn-layer-ruas"),
+        satelite: document.getElementById("btn-layer-satelite"),
+        topo: document.getElementById("btn-layer-topo")
+    };
+
+    Object.keys(botoes).forEach(k => {
+        if (botoes[k]) {
+            if (k === tipo) {
+                botoes[k].classList.add("active");
+            } else {
+                botoes[k].classList.remove("active");
+            }
+        }
+    });
+}
+// ==========================================
+// NOVO CONTROLE: TELA INICIAL E BOTÃO HOME
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const btnComecar = document.getElementById("btn-começar");
+    const loader = document.getElementById("loader");
+    const telaInicial = document.getElementById("tela-inicial");
+    
+    // Novos elementos limpos
+    const btnNovaHome = document.getElementById("btn-nova-home");
+    const modalNovaHome = document.getElementById("modal-nova-home");
+    const btnFecharNovaHome = document.getElementById("btn-fechar-nova-home");
+    const btnCancelarNovaHome = document.getElementById("btn-cancelar-nova-home");
+    const btnConfirmarNovaHome = document.getElementById("btn-confirmar-nova-home");
+
+    // 1. Entrar no sistema
+    if (btnComecar) {
+        // Remove listeners duplicados clonando o botão (Limpeza forçada)
+        const novoBtnComecar = btnComecar.cloneNode(true);
+        btnComecar.parentNode.replaceChild(novoBtnComecar, btnComecar);
+        
+        novoBtnComecar.addEventListener("click", () => {
+            novoBtnComecar.classList.add("hidden");
+            if (loader) loader.classList.remove("hidden");
+            
+            setTimeout(() => {
+                if (telaInicial) telaInicial.classList.add("fade-out");
+                
+                setTimeout(() => {
+                    if (typeof mapa !== 'undefined' && mapa.invalidateSize) mapa.invalidateSize();
+                    if (telaInicial) telaInicial.style.display = "none"; 
+                    
+                    // Mostra a UI do Mapa
+                    const btnConfig = document.getElementById("btn-config");
+                    const btnMetodologia = document.getElementById("btn-metodologia");
+                    
+                    if (btnConfig) btnConfig.style.display = "flex";
+                    if (btnMetodologia) btnMetodologia.style.display = "flex";
+                    if (btnNovaHome) btnNovaHome.style.display = "flex"; // Mostra o novo botão
+                    
+                    if (typeof verificarNovidades === "function") verificarNovidades();
+                }, 800);
+            }, 2000);
+        });
+    }
+
+    // 2. Abrir Modal de Saída
+    if (btnNovaHome && modalNovaHome) {
+        btnNovaHome.addEventListener("click", (e) => {
+            e.preventDefault(); 
+            modalNovaHome.classList.add("aberto");
+        });
+    }
+
+    // 3. Fechar Modal de Saída (Cancelar)
+    const fecharModalHome = () => {
+        if (modalNovaHome) modalNovaHome.classList.remove("aberto");
+    };
+
+    if (btnFecharNovaHome) btnFecharNovaHome.addEventListener("click", fecharModalHome);
+    if (btnCancelarNovaHome) btnCancelarNovaHome.addEventListener("click", fecharModalHome);
+    if (modalNovaHome) {
+        modalNovaHome.addEventListener("click", (e) => {
+            if (e.target === modalNovaHome) fecharModalHome();
+        });
+    }
+
+    // 4. Confirmar Saída e Resetar a Tela
+    if (btnConfirmarNovaHome) {
+        btnConfirmarNovaHome.addEventListener("click", () => {
+            fecharModalHome();
+            
+            if (telaInicial) {
+                telaInicial.style.display = "flex";
+                setTimeout(() => { telaInicial.classList.remove("fade-out"); }, 50);
+            }
+
+            // Reseta botão de iniciar
+            const atualBtnComecar = document.getElementById("btn-começar");
+            if (atualBtnComecar) atualBtnComecar.classList.remove("hidden");
+            if (loader) loader.classList.add("hidden");
+
+            // Esconde botões do mapa
+            const btnConfig = document.getElementById("btn-config");
+            const btnMetodologia = document.getElementById("btn-metodologia");
+            if (btnConfig) btnConfig.style.display = "none";
+            if (btnMetodologia) btnMetodologia.style.display = "none";
+            if (btnNovaHome) btnNovaHome.style.display = "none";
         });
     }
 });
